@@ -659,6 +659,55 @@
       max-width: 300px;
     }
     #toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── Q&A BLOCK ── */
+    .qa-chip {
+      background: rgba(255,255,255,.05);
+      border: 1px solid #21262d;
+      border-radius: 20px;
+      color: #8b949e;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+      white-space: nowrap;
+    }
+    .qa-chip:hover { border-color: #00D2FF; color: #00D2FF; }
+    .qa-msg {
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 10px 14px;
+      border-radius: 10px;
+      max-width: 92%;
+    }
+    .qa-user {
+      background: #161b22;
+      border: 1px solid #21262d;
+      align-self: flex-end;
+      color: #ffffff;
+    }
+    .qa-ai {
+      background: rgba(0,210,255,.07);
+      border: 1px solid rgba(0,210,255,.2);
+      align-self: flex-start;
+      color: #cdd9e5;
+    }
+    .qa-ai.loading { opacity: .55; }
+    .qa-input {
+      flex: 1;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      padding: 10px 14px;
+      transition: border-color .2s;
+    }
+    .qa-input:focus { outline: none; border-color: #00D2FF; }
+    .qa-input::placeholder { color: #6e7681; }
   </style>
 </head>
 <body>
@@ -732,6 +781,25 @@
     <p class="section-title" style="margin-top:28px">Mushak Forms Explained</p>
     <div class="mushak-grid" id="mushakGrid">
       <!-- Populated by JS -->
+    </div>
+
+    <!-- ── CLAUDE Q&A ── -->
+    <p class="section-title" style="margin-top:28px">Ask NBR Tax Questions</p>
+    <div class="penalty-card" id="qa-section">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px" id="qa-chips">
+        <button class="qa-chip" onclick="askQ('What is Mushak 9.1 and when is it due?')">What is Mushak 9.1?</button>
+        <button class="qa-chip" onclick="askQ('What is the penalty for late VAT return filing in Bangladesh?')">Late VAT penalty?</button>
+        <button class="qa-chip" onclick="askQ('Do I need to file TDS returns if I have no employees?')">TDS with no employees?</button>
+        <button class="qa-chip" onclick="askQ('What is advance income tax (AIT) in Bangladesh and who pays it?')">What is AIT?</button>
+        <button class="qa-chip" onclick="askQ('What is VDS and which services require VAT deduction at source in Bangladesh?')">What is VDS?</button>
+      </div>
+      <div id="qa-msgs" style="min-height:72px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+        <div class="qa-msg qa-ai">Ask me anything about NBR deadlines, Mushak forms, TDS, VDS, income tax, or penalties. I know Bangladesh tax law. 🇧🇩</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="qa-input" class="qa-input" placeholder="e.g. When is the Mushak 9.1 deadline for July?" onkeydown="if(event.key==='Enter')sendQ()" />
+        <button class="calc-btn" style="width:auto;padding:0 20px;margin-top:0;white-space:nowrap" onclick="sendQ()">Ask ↗</button>
+      </div>
     </div>
 
     <!-- Penalty Calculator -->
@@ -1193,7 +1261,7 @@
     ]);
 
     const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
-    const blob = new Blob(['\uFEFF' + csv, { type: 'text/csv;charset=utf-8;' }]);
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
     const url  = URL.createObjectURL(blob);
     const link = document.createElement('a');
     const date = new Date().toISOString().split('T')[0];
@@ -1218,6 +1286,59 @@
     el.textContent = msg;
     el.classList.add('show');
     setTimeout(() => el.classList.remove('show'), 3500);
+  }
+
+  /* ── Claude Q&A ── */
+  async function sendQ() {
+    const inp = document.getElementById('qa-input');
+    const q = inp.value.trim();
+    if (!q) return;
+    inp.value = '';
+    await askQ(q);
+  }
+
+  async function askQ(q) {
+    const msgs = document.getElementById('qa-msgs');
+
+    const uDiv = document.createElement('div');
+    uDiv.className = 'qa-msg qa-user';
+    uDiv.textContent = q;
+    msgs.appendChild(uDiv);
+
+    const aDiv = document.createElement('div');
+    aDiv.className = 'qa-msg qa-ai loading';
+    aDiv.textContent = 'Thinking…';
+    msgs.appendChild(aDiv);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    const bizLabel = document.getElementById('bizType').options[document.getElementById('bizType').selectedIndex]?.text || 'general business';
+
+    const sys = `You are an expert Bangladesh tax advisor specialising in NBR (National Board of Revenue) compliance. You have deep knowledge of all Mushak VAT forms, income tax rules, TDS/WHT obligations, VDS, advance tax, and company law filing requirements for Bangladesh as of 2026.
+
+User context: Business type = ${bizLabel}.
+
+Rules:
+- Be specific and practical. Give exact form names, deadlines, BDT penalty amounts, and NBR portal references where relevant.
+- Keep answers concise — max 160 words.
+- If asked in Bangla, respond in Bangla.
+- Never give vague generic advice. You are the expert.
+- Do not recommend consulting another advisor — you ARE the advisor.`;
+
+    try {
+      const res = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: q, system: sys })
+      });
+      const data = await res.json();
+      const text = data.answer || data.error || 'No response received.';
+      aDiv.className = 'qa-msg qa-ai';
+      aDiv.textContent = text;
+    } catch(e) {
+      aDiv.className = 'qa-msg qa-ai';
+      aDiv.textContent = 'Q&A requires a backend to be configured. Contact hello@inspiron.tech for the full version.';
+    }
+    msgs.scrollTop = msgs.scrollHeight;
   }
 
   /* ── URL Params ── */
