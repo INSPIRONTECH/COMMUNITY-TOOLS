@@ -12,7 +12,7 @@
 
 | Tool | Description | Live |
 |------|-------------|------|
-| [TAX-CALENDAR-BD](./TAX-CALENDAR-BD/) | Free NBR compliance calendar: VAT, Income Tax, TDS, VDS deadlines + Manager.io export | [tools.inspiron.tech/tax-calendar-bd](https://tools.inspiron.tech/tax-calendar-bd) |
+| [TAX-CALENDAR-BD](./TAX-CALENDAR-BD/) | Free NBR compliance calendar: VAT, Income Tax, TDS, VDS deadlines + Manager.io export | [tools.inspiron.tech](https://tools.inspiron.tech) |
 
 ---
 
