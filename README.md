@@ -10,9 +10,9 @@
 
 ## Tools
 
-| Tool | Description | Live |
-|------|-------------|------|
-| [TAX-CALENDAR-BD](./TAX-CALENDAR-BD/) | Free NBR compliance calendar: VAT, Income Tax, TDS, VDS deadlines + Manager.io export | [tools.inspiron.tech](https://tools.inspiron.tech) |
+| Tool                                         | Description                                                                             | Live                                              |
+| -------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| [TAX-CALENDAR-BD](./TAX-CALENDAR-BD/)        | Free NBR compliance calendar: VAT, Income Tax, TDS, VDS deadlines + Manager.io export  | [tools.inspiron.tech](https://tools.inspiron.tech) |
 
 ---
 
@@ -26,6 +26,7 @@ A free, self-contained web app for Bangladeshi SMEs that:
 - Mobile-first, bilingual (English/Bengali), no login required
 
 **Built for:**
+
 - 🏪 Trading / Retail
 - 🏭 Manufacturing
 - 🏢 Service businesses
@@ -45,12 +46,12 @@ The expert **implementation** layer (Manager.io system builds, Chart of Accounts
 
 ## Contact
 
-| Channel | Details |
-|---------|---------|
-| Email | hello@inspiron.tech |
-| WhatsApp | +880 1719-300849 |
-| Website | inspiron.tech |
-| Manager.io | manager.io/advisors |
+| Channel    | Details                          |
+| ---------- | -------------------------------- |
+| Email      | <hello@inspiron.tech>            |
+| WhatsApp   | +880 1719-300849                 |
+| Website    | <https://inspiron.tech>          |
+| Manager.io | <https://manager.io/advisors>    |
 
 ---
 
