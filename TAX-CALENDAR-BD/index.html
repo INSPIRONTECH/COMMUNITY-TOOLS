@@ -9,7 +9,12 @@
   <meta name="author" content="INSPIRON TECH" />
   <meta property="og:title" content="NBR Tax Compliance Calendar 2026 — Free for BD SMEs" />
   <meta property="og:description" content="Free unified NBR compliance calendar: VAT, Income Tax, TDS, VDS deadlines + Manager.io export. By INSPIRON TECH." />
-  <meta property="og:url" content="https://tools.inspiron.tech/tax-calendar-bd" />
+  <meta property="og:url" content="https://tools.inspiron.tech" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://inspiron.tech/og-tax-calendar.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://tools.inspiron.tech" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='90' cy='10' r='10' fill='%23FFD700'/><rect x='20' y='0' width='8' height='100' fill='%2300D2FF'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet" />
@@ -249,11 +254,13 @@
     }
 
     tbody tr {
-      border-bottom: 1px solid #161b22;
-      transition: background .15s;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      transition: background .2s;
     }
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: rgba(255,255,255,.02); }
+    tbody tr:hover {
+      background: linear-gradient(90deg, rgba(255,215,0,.025) 0%, rgba(0,210,255,.025) 100%);
+    }
 
     tbody td {
       padding: 13px 16px;
@@ -660,6 +667,40 @@
     }
     #toast.show { transform: translateY(0); opacity: 1; }
 
+    /* ── GLASSMORPHISM CARDS ── */
+    .penalty-card, .selector-card, .compare-card, .export-card, .cta-card {
+      background: rgba(13, 17, 23, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 8px 24px rgba(1,4,9,.4);
+    }
+
+    /* ── STAT CARDS ── */
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+    @media (max-width: 400px) { .stat-grid { grid-template-columns: 1fr; } }
+    .stat-card {
+      background: rgba(13, 17, 23, 0.6);
+      border: 1px solid #21262d;
+      border-radius: 16px;
+      padding: 20px 24px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .stat-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #8b949e;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
     /* ── Q&A BLOCK ── */
     .qa-chip {
       background: rgba(255,255,255,.05);
@@ -674,7 +715,14 @@
       transition: border-color .2s, color .2s;
       white-space: nowrap;
     }
-    .qa-chip:hover { border-color: #00D2FF; color: #00D2FF; }
+    .qa-chip { transition: all .3s cubic-bezier(.4,0,.2,1); }
+    .qa-chip:hover {
+      border-color: #00D2FF;
+      color: #00D2FF;
+      background: rgba(0,210,255,.05);
+      box-shadow: 0 0 12px rgba(0,210,255,.15);
+      transform: translateY(-1px);
+    }
     .qa-msg {
       font-size: 13px;
       line-height: 1.6;
@@ -755,6 +803,19 @@
 
   <!-- Deadlines Table -->
   <div id="deadlines-section" style="display:none">
+
+    <!-- Stat Cards -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Urgent Deadlines</div>
+        <div id="stat-urgent" class="stat-value" style="color:#FF453A">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Due This Month</div>
+        <div id="stat-month" class="stat-value" style="color:#FFD700">—</div>
+      </div>
+    </div>
+
     <div class="share-row">
       <a class="share-btn" id="shareLink" href="#" onclick="copyLink(event)">🔗 Copy Link</a>
     </div>
@@ -1168,6 +1229,12 @@
     const tbody = document.getElementById('deadlinesBody');
     tbody.innerHTML = '';
 
+    /* Stat cards */
+    const urgentCount = deadlines.filter(d => { const dl = daysLeft(d.dueDate); return dl >= 0 && dl <= 14; }).length;
+    const monthCount  = deadlines.filter(d => { const dl = daysLeft(d.dueDate); return dl >= 0 && dl <= 30; }).length;
+    document.getElementById('stat-urgent').textContent = urgentCount || '0';
+    document.getElementById('stat-month').textContent  = monthCount  || '0';
+
     if (!deadlines.length) {
       tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:#6e7681">No upcoming deadlines found.</td></tr>';
       return;
@@ -1289,10 +1356,14 @@
   }
 
   /* ── Claude Q&A ── */
+  let qaLocked = false;
   async function sendQ() {
+    if (qaLocked) return;
+    qaLocked = true;
+    setTimeout(() => qaLocked = false, 2000);
     const inp = document.getElementById('qa-input');
     const q = inp.value.trim();
-    if (!q) return;
+    if (!q) { qaLocked = false; return; }
     inp.value = '';
     await askQ(q);
   }
