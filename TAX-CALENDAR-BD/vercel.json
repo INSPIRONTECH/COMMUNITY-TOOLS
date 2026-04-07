@@ -1,7 +1,5 @@
 {
-  "outputDirectory": ".",
-  "functions": {
-    "api/ask.js": { "runtime": "nodejs20.x" }
-  }
+  "outputDirectory": "."
 }
+
 
