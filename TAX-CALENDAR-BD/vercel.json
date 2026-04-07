@@ -1,8 +1,7 @@
 {
   "outputDirectory": ".",
   "functions": {
-    "api/*.js": {
-      "runtime": "@vercel/node@5"
-    }
+    "api/ask.js": { "runtime": "nodejs20.x" }
   }
 }
+
