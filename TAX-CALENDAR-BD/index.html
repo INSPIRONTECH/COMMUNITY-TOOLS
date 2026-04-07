@@ -361,23 +361,48 @@
     .penalty-amount { font-size: 24px; font-weight: 900; color: #FFD700; }
     .penalty-note   { font-size: 11px; color: #6e7681; margin-top: 4px; }
 
+    /* ── CALCULATE BUTTON ── */
+    @keyframes btn-shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+
     .calc-btn {
       margin-top: 16px;
       width: 100%;
-      background: rgba(255,215,0,.1);
-      border: 1px solid rgba(255,215,0,.3);
-      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(255,215,0,.18) 0%, rgba(255,180,0,.08) 100%);
+      border: 1px solid rgba(255,215,0,.45);
+      border-radius: 12px;
       color: #FFD700;
       font-family: inherit;
       font-size: 13px;
-      font-weight: 700;
-      padding: 12px;
+      font-weight: 800;
+      padding: 13px 16px;
       cursor: pointer;
-      letter-spacing: .06em;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      transition: background .2s, border-color .2s;
+      transition: all .25s cubic-bezier(.4,0,.2,1);
+      position: relative;
+      overflow: hidden;
     }
-    .calc-btn:hover { background: rgba(255,215,0,.18); border-color: rgba(255,215,0,.5); }
+    .calc-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+        transparent 0%, rgba(255,215,0,.18) 50%, transparent 100%);
+      background-size: 200% 100%;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .calc-btn:hover {
+      background: linear-gradient(135deg, rgba(255,215,0,.28) 0%, rgba(255,180,0,.14) 100%);
+      border-color: rgba(255,215,0,.75);
+      box-shadow: 0 0 20px rgba(255,215,0,.2), 0 4px 16px rgba(255,215,0,.12);
+      transform: translateY(-1px);
+    }
+    .calc-btn:hover::before { opacity: 1; animation: btn-shimmer 1.4s linear infinite; }
+    .calc-btn:active { transform: translateY(0); box-shadow: none; }
 
     /* ── EXPORT SECTION ── */
     .export-card {
@@ -425,30 +450,37 @@
 
     .export-btn {
       width: 100%;
-      background: linear-gradient(135deg, #FFD700, #e6c200);
+      background: linear-gradient(135deg, #FFD700 0%, #FFC200 50%, #FFD700 100%);
+      background-size: 200% auto;
       border: none;
       border-radius: 12px;
       color: #010409;
       font-family: inherit;
       font-size: 14px;
-      font-weight: 800;
-      letter-spacing: .06em;
+      font-weight: 900;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      padding: 16px 24px;
+      padding: 17px 24px;
       cursor: pointer;
-      transition: transform .15s, box-shadow .15s;
+      transition: transform .2s cubic-bezier(.4,0,.2,1),
+                  box-shadow .2s cubic-bezier(.4,0,.2,1),
+                  background-position .6s;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
+      position: relative;
+      overflow: hidden;
     }
     .export-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 30px rgba(255,215,0,.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,215,0,.45), 0 2px 8px rgba(255,215,0,.25);
+      background-position: right center;
+      animation: btn-shimmer 1.2s linear infinite;
     }
-    .export-btn:active { transform: translateY(0); }
-
-    .export-btn-icon { font-size: 18px; }
+    .export-btn:active { transform: translateY(0); box-shadow: none; }
+    .export-btn-icon { font-size: 18px; transition: transform .2s; }
+    .export-btn:hover .export-btn-icon { transform: scale(1.2) rotate(-6deg); }
 
     .export-note {
       margin-top: 12px;
@@ -489,41 +521,52 @@
     .btn-primary {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: linear-gradient(135deg, #00D2FF, #0093b3);
+      gap: 8px;
+      background: linear-gradient(135deg, #00D2FF 0%, #0099cc 100%);
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       color: #010409;
       font-family: inherit;
       font-size: 13px;
       font-weight: 800;
       letter-spacing: .04em;
-      padding: 12px 22px;
+      padding: 13px 24px;
       text-decoration: none;
       cursor: pointer;
-      transition: transform .15s, box-shadow .15s;
+      transition: transform .2s cubic-bezier(.4,0,.2,1),
+                  box-shadow .2s cubic-bezier(.4,0,.2,1);
+      position: relative;
     }
     .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(0,210,255,.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,210,255,.4), 0 2px 8px rgba(0,210,255,.2);
     }
+    .btn-primary:active { transform: translateY(0); box-shadow: none; }
+
     .btn-secondary {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: transparent;
-      border: 1px solid #30363d;
-      border-radius: 10px;
+      gap: 8px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 12px;
       color: #8b949e;
       font-family: inherit;
       font-size: 13px;
-      font-weight: 600;
-      padding: 12px 22px;
+      font-weight: 700;
+      padding: 13px 24px;
       text-decoration: none;
       cursor: pointer;
-      transition: border-color .2s, color .2s;
+      transition: all .2s cubic-bezier(.4,0,.2,1);
+      position: relative;
     }
-    .btn-secondary:hover { border-color: #8b949e; color: #ffffff; }
+    .btn-secondary:hover {
+      background: rgba(0,210,255,.07);
+      border-color: rgba(0,210,255,.4);
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(0,210,255,.1);
+    }
+    .btn-secondary:active { transform: scale(0.98); }
 
     /* ── COMPARISON TABLE ── */
     .compare-card {
@@ -845,13 +888,20 @@
     /* ── SHARE BUTTON ── */
     .share-row { display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 8px; }
     .share-btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: rgba(255,255,255,.05); border: 1px solid #21262d;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
       border-radius: 8px; color: #8b949e; font-family: inherit;
-      font-size: 11px; font-weight: 600; padding: 6px 12px;
-      cursor: pointer; text-decoration: none; transition: border-color .2s, color .2s;
+      font-size: 11px; font-weight: 700; padding: 7px 14px;
+      cursor: pointer; text-decoration: none;
+      letter-spacing: .04em;
+      transition: all .2s cubic-bezier(.4,0,.2,1);
     }
-    .share-btn:hover { border-color: #30363d; color: #ffffff; }
+    .share-btn:hover {
+      background: rgba(0,210,255,.07);
+      border-color: rgba(0,210,255,.35);
+      color: #00D2FF;
+    }
 
     /* ── TOAST ── */
     #toast {
