@@ -630,11 +630,216 @@
     }
     .empty-state svg { margin-bottom: 12px; opacity: .4; }
 
+    /* ── HAPTIC BUTTON DOCTRINE (WEB-COMMAND-HQ pattern) ── */
+    .haptic-btn {
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .haptic-btn:active { transform: scale(0.96); }
+
+    /* ── iOS INPUT ZOOM PREVENTION ── */
+    input, select, textarea {
+      font-size: 16px !important; /* iOS Safari zooms if < 16px */
+    }
+
+    /* ── SAFE AREA (notched iPhones) ── */
+    .container {
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+    }
+
+    /* ── TABLE — touch scroll ── */
+    .deadlines-wrap {
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+
+    /* ── HAMBURGER BUTTON ── */
+    #hamburger {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: rgba(1,4,9,.9);
+      border: 1px solid rgba(0,210,255,.3);
+      border-radius: 10px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color .2s, background .2s;
+    }
+    #hamburger:hover { border-color: rgba(0,210,255,.7); background: rgba(0,210,255,.06); }
+    #hamburger svg { display: block; }
+
+    /* ── MOBILE DRAWER ── */
+    #mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    #mobile-overlay.open { display: block; }
+
+    #mobile-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 85vw;
+      max-width: 340px;
+      background: #0d1117;
+      border-right: 2px solid rgba(0,210,255,.18);
+      z-index: 201;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform .25s cubic-bezier(0.16,1,0.3,1);
+      overflow: hidden;
+    }
+    #mobile-drawer.open { transform: translateX(0); }
+
+    .drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(0,210,255,.12);
+    }
+    .drawer-head-logo { font-size: 13px; font-weight: 800; color: #FFD700; }
+    .drawer-head-sub  { font-size: 10px; color: #8b949e; margin-top: 2px; }
+    .drawer-close {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 8px;
+      cursor: pointer;
+      color: #8b949e;
+      font-size: 18px;
+      line-height: 1;
+      transition: color .2s, border-color .2s;
+    }
+    .drawer-close:hover { color: #ffffff; border-color: #30363d; }
+
+    .drawer-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #6e7681;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 16px 20px 8px;
+    }
+
+    .drawer-nav { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+    .drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #cdd9e5;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .drawer-link:hover, .drawer-link:active {
+      background: rgba(0,210,255,.05);
+      border-left-color: #00D2FF;
+      color: #ffffff;
+    }
+    .drawer-link-icon {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px;
+      background: rgba(255,255,255,.05);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .drawer-cta {
+      padding: 16px 20px;
+      border-top: 1px solid rgba(255,215,0,.15);
+    }
+    .drawer-whatsapp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #FFD700, #e6c200);
+      color: #010409;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      border: none;
+      border-radius: 12px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .drawer-disclaimer {
+      font-size: 10px;
+      color: #6e7681;
+      text-align: center;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
+      /* Export steps */
       .export-steps { flex-direction: column; }
       .step-arrow   { display: none; }
-      header        { flex-direction: column; text-align: center; }
+
+      /* Header — never column-stack, use hamburger instead */
+      header { padding: 10px 16px; }
+      #hamburger { display: flex; }
+      .header-badge { display: none; } /* hidden — shown in drawer */
+
+      /* Subnav — replaced by drawer on mobile */
+      #subnav { display: none; }
+
+      /* Container */
+      .container { padding: 20px max(14px, env(safe-area-inset-left)) 80px; }
+
+      /* QA input row — stack on small screens */
+      #qa-input-row { flex-direction: column; }
+      #qa-input-row .calc-btn { width: 100%; padding: 13px; margin-top: 0; }
+
+      /* Penalty calc grid — single column */
+      .penalty-grid { grid-template-columns: 1fr; }
+
+      /* Min tap targets */
+      .calc-btn, .export-btn, .btn-primary, .btn-secondary, .share-btn {
+        min-height: 44px;
+      }
+      .qa-chip { min-height: 36px; padding: 7px 14px; }
+
+      /* Hero tighter on mobile */
+      .hero { padding: 40px 16px 32px; }
+      h1 { font-size: clamp(24px, 7vw, 36px); }
+
+      /* Cards — tighter padding */
+      .selector-card, .penalty-card, .export-card, .cta-card, .compare-card {
+        padding: 20px 16px;
+      }
+
+      /* Stat cards — smaller value number */
+      .stat-value { font-size: 32px; }
+
+      /* Table row font */
+      tbody td { font-size: 12px; padding: 10px 12px; }
+      thead th  { font-size: 10px; padding: 10px 12px; }
+    }
+
+    @media (max-width: 380px) {
+      .stat-grid { grid-template-columns: 1fr; }
+      .cta-btn-row { flex-direction: column; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
     }
 
     /* ── SHARE BUTTON ── */
@@ -785,9 +990,70 @@
     </div>
   </a>
   <span class="header-badge">🇧🇩 Free NBR Tool</span>
+
+  <!-- Hamburger — visible on mobile only -->
+  <button id="hamburger" onclick="openDrawer()" aria-label="Open navigation menu" aria-expanded="false">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect y="3" width="20" height="2" rx="1" fill="#00D2FF"/>
+      <rect y="9" width="20" height="2" rx="1" fill="#00D2FF"/>
+      <rect y="15" width="20" height="2" rx="1" fill="#00D2FF"/>
+    </svg>
+  </button>
 </header>
 
-<!-- SUBNAV -->
+<!-- MOBILE DRAWER OVERLAY -->
+<div id="mobile-overlay" onclick="closeDrawer()" role="presentation"></div>
+
+<!-- MOBILE DRAWER -->
+<div id="mobile-drawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
+
+  <!-- Drawer Header -->
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-head-logo">INSPIRON TECH</div>
+      <div class="drawer-head-sub">🇧🇩 Free NBR Tax Tool</div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Close menu">✕</button>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="drawer-nav" aria-label="Page sections">
+    <div class="drawer-section-label">Jump to Section</div>
+    <a href="#section-deadlines" class="drawer-link haptic-btn" onclick="closeDrawer()">
+      <span class="drawer-link-icon">📅</span>
+      <span>Upcoming Deadlines</span>
+    </a>
+    <a href="#section-mushak" class="drawer-link haptic-btn" onclick="closeDrawer()">
+      <span class="drawer-link-icon">📋</span>
+      <span>Mushak Forms Explained</span>
+    </a>
+    <a href="#section-qa" class="drawer-link haptic-btn" onclick="closeDrawer()">
+      <span class="drawer-link-icon">💬</span>
+      <span>Ask Tax Question</span>
+    </a>
+    <a href="#section-penalty" class="drawer-link haptic-btn" onclick="closeDrawer()">
+      <span class="drawer-link-icon">⚠️</span>
+      <span>Penalty Calculator</span>
+    </a>
+    <a href="#section-export" class="drawer-link haptic-btn" onclick="closeDrawer()">
+      <span class="drawer-link-icon">📊</span>
+      <span>Export to Manager.io</span>
+    </a>
+  </nav>
+
+  <!-- CTA -->
+  <div class="drawer-cta">
+    <a href="https://wa.me/8801719300849" class="drawer-whatsapp haptic-btn" target="_blank" rel="noopener">
+      💬 Get Free Tax Consultation
+    </a>
+    <p class="drawer-disclaimer">
+      INSPIRON TECH · Official Manager.io Partner<br>
+      hello@inspiron.tech
+    </p>
+  </div>
+</div>
+
+<!-- SUBNAV (desktop only) -->
 <nav style="background:rgba(1,4,9,.85);backdrop-filter:blur(12px);border-bottom:1px solid #21262d;padding:0 20px;display:flex;gap:0;overflow-x:auto;position:sticky;top:57px;z-index:99" id="subnav">
   <a href="#section-deadlines" class="subnav-link">Deadlines</a>
   <a href="#section-mushak" class="subnav-link">Mushak Forms</a>
@@ -895,9 +1161,9 @@
       <div id="qa-msgs" style="min-height:72px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
         <div class="qa-msg qa-ai">Ask me anything about NBR deadlines, Mushak forms, TDS, VDS, income tax, or penalties. I know Bangladesh tax law. 🇧🇩</div>
       </div>
-      <div style="display:flex;gap:8px">
+      <div style="display:flex;gap:8px" id="qa-input-row">
         <input type="text" id="qa-input" class="qa-input" placeholder="e.g. When is the Mushak 9.1 deadline for July?" onkeydown="if(event.key==='Enter')sendQ()" />
-        <button class="calc-btn" style="width:auto;padding:0 20px;margin-top:0;white-space:nowrap" onclick="sendQ()">Ask ↗</button>
+        <button class="calc-btn haptic-btn" style="width:auto;padding:0 20px;margin-top:0;white-space:nowrap" onclick="sendQ()">Ask ↗</button>
       </div>
     </div>
 
@@ -1483,6 +1749,23 @@ Rules:
 
     msgs.scrollTop = msgs.scrollHeight;
   }
+
+  /* ── Mobile Drawer ── */
+  function openDrawer() {
+    document.getElementById('mobile-drawer').classList.add('open');
+    document.getElementById('mobile-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('hamburger').setAttribute('aria-expanded', 'true');
+  }
+  function closeDrawer() {
+    document.getElementById('mobile-drawer').classList.remove('open');
+    document.getElementById('mobile-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeDrawer();
+  });
 
   /* ── URL Params ── */
   (function init() {
