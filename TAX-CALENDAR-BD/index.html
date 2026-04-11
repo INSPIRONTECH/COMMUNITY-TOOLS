@@ -1199,7 +1199,12 @@
     </div>
 
     <!-- ── CLAUDE Q&A ── -->
-    <p class="section-title" style="margin-top:28px" id="section-qa">Ask NBR Tax Questions</p>
+    <p class="section-title" style="margin-top:28px" id="section-qa">
+      Ask NBR Tax Questions
+      <span style="display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:700;color:#cc785c;letter-spacing:.06em;background:rgba(204,120,92,.1);border:1px solid rgba(204,120,92,.3);border-radius:20px;padding:2px 9px;margin-left:6px;text-transform:uppercase;vertical-align:middle">
+        ⬡ Powered by Claude
+      </span>
+    </p>
     <div class="penalty-card" id="qa-section">
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px" id="qa-chips">
         <button class="qa-chip" onclick="askQ('What is Mushak 9.1 and when is it due?')">What is Mushak 9.1?</button>
@@ -1209,7 +1214,7 @@
         <button class="qa-chip" onclick="askQ('What is VDS and which services require VAT deduction at source in Bangladesh?')">What is VDS?</button>
       </div>
       <div id="qa-msgs" style="min-height:72px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
-        <div class="qa-msg qa-ai">Ask me anything about NBR deadlines, Mushak forms, TDS, VDS, income tax, or penalties. I know Bangladesh tax law. 🇧🇩</div>
+        <div class="qa-msg qa-ai">Ask me anything about NBR deadlines, Mushak forms, TDS, VDS, income tax, or penalties. I know Bangladesh tax law. 🇧🇩<br/><span style="font-size:10px;color:#6e7681;margin-top:4px;display:block">AI responses powered by <strong style="color:#cc785c">Anthropic Claude</strong></span></div>
       </div>
       <div style="display:flex;gap:8px" id="qa-input-row">
         <input type="text" id="qa-input" class="qa-input" placeholder="e.g. When is the Mushak 9.1 deadline for July?" onkeydown="if(event.key==='Enter')sendQ()" />
@@ -1398,6 +1403,12 @@
     <a href="mailto:hello@inspiron.tech">hello@inspiron.tech</a>
     <a href="https://wa.me/8801719300849" target="_blank" rel="noopener">WhatsApp</a>
     <a href="https://manager.io/advisors" target="_blank" rel="noopener">Manager.io Partner</a>
+  </div>
+  <div style="margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:8px">
+    <span style="font-size:11px;color:#6e7681">AI Q&amp;A powered by</span>
+    <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#cc785c;background:rgba(204,120,92,.08);border:1px solid rgba(204,120,92,.25);border-radius:20px;padding:3px 10px">
+      ⬡ Anthropic Claude
+    </span>
   </div>
   <div class="footer-disclaimer">
     Deadlines based on NBR rules as of April 2026. Always verify with your tax advisor for the latest circulars.
