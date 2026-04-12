@@ -1173,6 +1173,15 @@
     <div class="share-row">
       <a class="share-btn" id="shareLink" href="#" onclick="copyLink(event)">🔗 Copy Link</a>
     </div>
+    <div style="background:rgba(0,210,255,.05);border:1px solid rgba(0,210,255,.18);border-radius:10px;padding:11px 16px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start">
+      <span style="font-size:14px;flex-shrink:0">ℹ️</span>
+      <div style="font-size:11px;color:#8b949e;line-height:1.6">
+        <strong style="color:#cdd9e5">Disclaimer:</strong> All dates and penalties are based on standard NBR rules as of April 2026.
+        Always cross-check the latest circular at
+        <a href="https://etaxnbr.gov.bd" target="_blank" rel="noopener" style="color:#00D2FF">etaxnbr.gov.bd</a>
+        before filing. TDS Form 108 due date may vary by circular — 25th is the standard date.
+      </div>
+    </div>
     <p class="section-title" id="section-deadlines">Upcoming Deadlines</p>
 
     <div class="deadlines-wrap">
@@ -1428,7 +1437,7 @@
     { code: 'Mushak-6.3', name: 'Tax Invoice (VAT Challan)', bangla: 'ভ্যাট চালান', desc: 'VAT invoice issued at point of supply. Mandatory for all VAT-registered transactions. Must show BIN, item details, and VAT amount.', deadline: 'At time of supply' },
     { code: 'Mushak-6.1', name: 'Purchase Account Book', bangla: 'ক্রয় হিসাব বই', desc: 'Purchase register recording all VAT-able purchases. Feeds input VAT credit claims in Mushak-9.1.', deadline: 'Maintained continuously; data used in monthly return' },
     { code: 'Mushak-6.2', name: 'Sales Account Book', bangla: 'বিক্রয় হিসাব বই', desc: 'Sales register recording all taxable sales and output VAT collected. Feeds output VAT in Mushak-9.1.', deadline: 'Maintained continuously; data used in monthly return' },
-    { code: 'Mushak-18', name: 'Account Current', bangla: 'চলতি হিসাব', desc: 'Running ledger of VAT payable/receivable balance carried forward between periods.', deadline: 'Adjusted with monthly return' },
+    { code: 'Mushak-18', name: 'Account Current', bangla: 'চলতি হিসাব', desc: 'Closing VAT payable or receivable balance declared in Mushak-9.1. Automatically carried forward to next month as opening balance.', deadline: 'Adjusted with monthly return' },
   ];
 
   function getAllDeadlines(businessType) {
