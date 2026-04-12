@@ -1424,12 +1424,11 @@
   /* ── NBR Deadline Engine ── */
 
   const MUSHAK_INFO = [
-    { code: 'Mushak-9.1', name: 'Monthly VAT Return', bangla: 'মাসিক ভ্যাট রিটার্ন', desc: 'Net Output VAT minus Input VAT. Filed monthly via eVAT portal.', deadline: '15th of the following month' },
-    { code: 'Mushak-6.3', name: 'VAT Invoice (Challan)', bangla: 'ভ্যাট চালান', desc: 'VAT invoice issued at point of sale. Required for all VAT-registered transactions.', deadline: 'At time of supply' },
-    { code: 'Mushak-16', name: 'Purchase Journal', bangla: 'ক্রয় জার্নাল', desc: 'Record of all VAT-able purchases. Feeds input VAT credit claims.', deadline: 'With monthly return' },
-    { code: 'Mushak-17', name: 'Sales Journal', bangla: 'বিক্রয় জার্নাল', desc: 'Record of all taxable sales and output VAT collected.', deadline: 'With monthly return' },
-    { code: 'Mushak-18', name: 'Current Account', bangla: 'চলতি হিসাব', desc: 'Running ledger of VAT payable/receivable balance.', deadline: 'With monthly return' },
-    { code: 'Mushak-19', name: 'VAT Return Summary', bangla: 'ভ্যাট রিটার্ন সারসংক্ষেপ', desc: 'Final consolidated return for submission to NBR via eVAT.', deadline: '15th of the following month' },
+    { code: 'Mushak-9.1', name: 'Monthly VAT Return', bangla: 'মাসিক ভ্যাট রিটার্ন', desc: 'Net Output VAT minus Input VAT. Filed monthly via NBR eVAT portal. Consolidates all sub-forms into a single monthly submission.', deadline: '15th of the following month' },
+    { code: 'Mushak-6.3', name: 'Tax Invoice (VAT Challan)', bangla: 'ভ্যাট চালান', desc: 'VAT invoice issued at point of supply. Mandatory for all VAT-registered transactions. Must show BIN, item details, and VAT amount.', deadline: 'At time of supply' },
+    { code: 'Mushak-6.1', name: 'Purchase Account Book', bangla: 'ক্রয় হিসাব বই', desc: 'Purchase register recording all VAT-able purchases. Feeds input VAT credit claims in Mushak-9.1.', deadline: 'Maintained continuously; data used in monthly return' },
+    { code: 'Mushak-6.2', name: 'Sales Account Book', bangla: 'বিক্রয় হিসাব বই', desc: 'Sales register recording all taxable sales and output VAT collected. Feeds output VAT in Mushak-9.1.', deadline: 'Maintained continuously; data used in monthly return' },
+    { code: 'Mushak-18', name: 'Account Current', bangla: 'চলতি হিসাব', desc: 'Running ledger of VAT payable/receivable balance carried forward between periods.', deadline: 'Adjusted with monthly return' },
   ];
 
   function getAllDeadlines(businessType) {
@@ -1476,13 +1475,13 @@
     if (isCompany) {
       deadlines.push({
         type: 'INCOME-TAX',
-        description: 'Corporate Income Tax Return — AY 2025-26',
+        description: 'Corporate Income Tax Return — AY 2025-26 (Extended)',
         bangla: 'কর্পোরেট আয়কর রিটার্ন',
         period: 'AY 2025-26',
-        dueDate: new Date('2026-03-31'),
-        penalty: 'Late fee + interest on unpaid tax',
+        dueDate: new Date('2026-04-15'),
+        penalty: 'Tk 1,000/month delay + 2% interest/month on unpaid tax',
         account: 'Corporate Tax Payable',
-        memo: 'Corporate Income Tax Return (AY 2025-26) — extended'
+        memo: 'Corporate Income Tax Return (AY 2025-26) — Extended to 15 Apr 2026 per NBR order'
       });
       deadlines.push({
         type: 'INCOME-TAX',
@@ -1490,68 +1489,68 @@
         bangla: 'কর্পোরেট আয়কর রিটার্ন',
         period: 'AY 2026-27',
         dueDate: new Date('2027-01-15'),
-        penalty: 'Late fee + interest on unpaid tax',
+        penalty: 'Tk 1,000/month delay + 2% interest/month on unpaid tax',
         account: 'Corporate Tax Payable',
         memo: 'Corporate Income Tax Return (AY 2026-27)'
       });
     } else {
       deadlines.push({
         type: 'INCOME-TAX',
-        description: 'Annual Income Tax Return — AY 2025-26',
-        bangla: 'বার্ষিক আয়কর রিটার্ন',
+        description: 'Individual Income Tax Return — AY 2025-26',
+        bangla: 'ব্যক্তিগত আয়কর রিটার্ন',
         period: 'AY 2025-26',
         dueDate: new Date('2026-03-31'),
-        penalty: 'Tk 1,000/month + interest on unpaid tax',
+        penalty: 'Tk 1,000/month delay + 2% simple interest/month on unpaid tax',
         account: 'Income Tax Payable',
-        memo: 'Annual Income Tax Return (AY 2025-26) — extended deadline'
+        memo: 'Individual Income Tax Return (AY 2025-26) — verify extension at etaxnbr.gov.bd'
       });
       deadlines.push({
         type: 'INCOME-TAX',
-        description: 'Annual Income Tax Return — AY 2026-27',
-        bangla: 'বার্ষিক আয়কর রিটার্ন',
+        description: 'Individual Income Tax Return — AY 2026-27',
+        bangla: 'ব্যক্তিগত আয়কর রিটার্ন',
         period: 'AY 2026-27',
         dueDate: new Date('2026-11-30'),
-        penalty: 'Tk 1,000/month + interest on unpaid tax',
+        penalty: 'Tk 1,000/month delay + 2% simple interest/month on unpaid tax',
         account: 'Income Tax Payable',
-        memo: 'Annual Income Tax Return (AY 2026-27)'
+        memo: 'Individual Income Tax Return (AY 2026-27)'
       });
     }
 
-    // Advance Tax Instalments
+    // Advance Tax Instalments (cumulative: 15% → 45% → 75% → 100%)
     [
-      { date: new Date('2026-09-15'), period: 'Q1 FY 2026-27 (Jul-Sep)' },
-      { date: new Date('2026-12-15'), period: 'Q2 FY 2026-27 (Oct-Dec)' },
-      { date: new Date('2027-03-15'), period: 'Q3 FY 2026-27 (Jan-Mar)' },
-      { date: new Date('2027-06-15'), period: 'Q4 FY 2026-27 (Apr-Jun)' },
-    ].forEach(({ date, period }) => {
+      { date: new Date('2026-09-15'), period: 'Q1 FY 2026-27 (Jul-Sep)', pct: '15% of estimated tax' },
+      { date: new Date('2026-12-15'), period: 'Q2 FY 2026-27 (Oct-Dec)', pct: '45% cumulative' },
+      { date: new Date('2027-03-15'), period: 'Q3 FY 2026-27 (Jan-Mar)', pct: '75% cumulative' },
+      { date: new Date('2027-06-15'), period: 'Q4 FY 2026-27 (Apr-Jun)', pct: '100% cumulative' },
+    ].forEach(({ date, period, pct }) => {
       deadlines.push({
         type: 'ADVANCE-TAX',
-        description: 'Advance Income Tax Instalment',
+        description: `Advance Income Tax Instalment (${pct})`,
         bangla: 'অগ্রিম আয়কর',
         period,
         dueDate: date,
-        penalty: 'Interest on shortfall amount',
+        penalty: '2% simple interest/month on shortfall amount',
         account: 'Advance Tax',
-        memo: `Advance Tax Instalment — ${period}`
+        memo: `Advance Tax Instalment — ${period} — ${pct}`
       });
     });
 
-    // TDS Returns (Form 108) — quarterly
+    // TDS Returns (Form 108) — quarterly — due 25th of month after quarter end
     [
-      { date: new Date('2026-10-15'), period: 'Q1 Jul-Sep 2026' },
-      { date: new Date('2027-01-15'), period: 'Q2 Oct-Dec 2026' },
-      { date: new Date('2027-04-15'), period: 'Q3 Jan-Mar 2027' },
-      { date: new Date('2027-07-15'), period: 'Q4 Apr-Jun 2027' },
+      { date: new Date('2026-10-25'), period: 'Q1 Jul-Sep 2026' },
+      { date: new Date('2027-01-25'), period: 'Q2 Oct-Dec 2026' },
+      { date: new Date('2027-04-25'), period: 'Q3 Jan-Mar 2027' },
+      { date: new Date('2027-07-25'), period: 'Q4 Apr-Jun 2027' },
     ].forEach(({ date, period }) => {
       deadlines.push({
         type: 'TDS',
-        description: 'TDS Return — Form 108',
-        bangla: 'উৎসে কর রিটার্ন',
+        description: 'Quarterly TDS Return — Form 108',
+        bangla: 'উৎসে কর রিটার্ন (ত্রৈমাসিক)',
         period,
         dueDate: date,
-        penalty: 'Fixed penalty + interest on unpaid TDS',
+        penalty: 'Fixed penalty + 2% interest/month on unpaid TDS',
         account: 'TDS Payable',
-        memo: `TDS Return Form 108 — ${period}`
+        memo: `Quarterly TDS Return Form 108 — ${period}`
       });
     });
 
@@ -1651,24 +1650,26 @@
     if (!days && !amount) { el.classList.remove('show'); return; }
 
     let penalty = 0, breakdown = '';
-    const dailyRate = 0.02 / 30; // ~2% per month
+    const months = Math.ceil(days / 30); // penalty calculated per month
+    const monthlyInterest = amount * 0.02 * months; // 2% simple interest per month
 
     switch(type) {
       case 'vat':
-        penalty = Math.max(10000, amount * dailyRate * days);
-        breakdown = `Min Tk 10,000 flat OR 2%/month on Tk ${amount.toLocaleString()} × ${days} days — whichever is higher`;
+        penalty = Math.max(10000, monthlyInterest);
+        breakdown = `Min Tk 10,000 flat OR 2%/month × ${months} month(s) on Tk ${amount.toLocaleString()} = Tk ${Math.round(monthlyInterest).toLocaleString()} — whichever is higher`;
         break;
       case 'income':
-        penalty = Math.max(1000, amount * dailyRate * days);
-        breakdown = `Tk 1,000/month minimum + daily interest on Tk ${amount.toLocaleString()} for ${days} days`;
+        const lateMonths = months * 1000; // Tk 1,000 per month
+        penalty = lateMonths + monthlyInterest;
+        breakdown = `Tk 1,000 × ${months} month(s) = Tk ${lateMonths.toLocaleString()} late fee + 2% interest × ${months} month(s) on Tk ${amount.toLocaleString()} = Tk ${Math.round(monthlyInterest).toLocaleString()}`;
         break;
       case 'tds':
-        penalty = Math.max(5000, amount * dailyRate * days);
-        breakdown = `Fixed penalty + interest on Tk ${amount.toLocaleString()} for ${days} days`;
+        penalty = Math.max(5000, monthlyInterest);
+        breakdown = `Min Tk 5,000 flat OR 2%/month × ${months} month(s) on Tk ${amount.toLocaleString()} = Tk ${Math.round(monthlyInterest).toLocaleString()} — whichever is higher`;
         break;
       case 'vds':
-        penalty = Math.max(10000, amount * dailyRate * days);
-        breakdown = `Min Tk 10,000 flat OR interest on Tk ${amount.toLocaleString()} for ${days} days`;
+        penalty = Math.max(10000, monthlyInterest);
+        breakdown = `Min Tk 10,000 flat OR 2%/month × ${months} month(s) on Tk ${amount.toLocaleString()} = Tk ${Math.round(monthlyInterest).toLocaleString()} — whichever is higher`;
         break;
     }
 
