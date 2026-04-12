@@ -15,9 +15,16 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://tools.inspiron.tech" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='90' cy='10' r='10' fill='%23FFD700'/><rect x='20' y='0' width='8' height='100' fill='%2300D2FF'/></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet" />
+  <!-- Neo Sans Pro — INSPIRON TECH brand font (self-hosted) -->
+  <style>
+    @font-face { font-family: 'Neo Sans Pro'; src: url('fonts/NeoSansPro-Regular.woff') format('woff'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Neo Sans Pro'; src: url('fonts/NeoSansPro-Medium.woff') format('woff'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Neo Sans Pro'; src: url('fonts/NeoSansPro-Bold.woff') format('woff'); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Neo Sans Pro'; src: url('fonts/NeoSansPro-Light.woff') format('woff'); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Li Ador Noirrit'; src: url('fonts/LiAdorNoirrit-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Li Ador Noirrit'; src: url('fonts/LiAdorNoirrit-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Li Ador Noirrit'; src: url('fonts/LiAdorNoirrit-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+  </style>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -47,10 +54,15 @@
     body {
       background: #010409;
       color: #ffffff;
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: 'Neo Sans Pro', system-ui, sans-serif;
       font-size: 15px;
       line-height: 1.6;
       min-height: 100vh;
+    }
+
+    /* Bangla text — Li Ador Noirrit */
+    .bangla, .bangla-note, .deadline-bangla, .drawer-head-sub {
+      font-family: 'Li Ador Noirrit', 'Noto Sans Bengali', sans-serif;
     }
 
     /* ── HEADER ── */
@@ -58,45 +70,45 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(1, 4, 9, 0.92);
+      background: rgba(1, 4, 9, 0.95);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid #21262d;
-      padding: 14px 20px;
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,210,255,.12);
+      padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
     }
 
-    .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #FFD700, #00D2FF);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.85)} }
+    .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 
-    .logo-text { font-size: 13px; font-weight: 700; color: #FFD700; letter-spacing: .04em; }
-    .logo-sub  { font-size: 10px; color: #8b949e; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; }
+    .logo-svg-mark {
+      width: 36px; height: 36px;
+      flex-shrink: 0;
+    }
+
+    .logo-text { font-size: 14px; font-weight: 700; color: #FFD700; letter-spacing: .06em; }
+    .logo-sub  { font-size: 9px; color: #8b949e; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; margin-top: 1px; }
 
     .header-badge {
       font-size: 10px;
-      font-weight: 600;
-      padding: 4px 10px;
+      font-weight: 700;
+      padding: 5px 12px;
       border-radius: 20px;
-      background: rgba(255,215,0,.1);
+      background: rgba(255,215,0,.08);
       color: #FFD700;
-      border: 1px solid rgba(255,215,0,.25);
+      border: 1px solid rgba(255,215,0,.3);
       white-space: nowrap;
-      letter-spacing: .04em;
+      letter-spacing: .06em;
+      text-transform: uppercase;
     }
 
     /* ── HERO ── */
     .hero {
-      background: linear-gradient(135deg, #010409 0%, #0d1117 50%, #010409 100%);
-      border-bottom: 1px solid #21262d;
-      padding: 60px 20px 48px;
+      background: linear-gradient(160deg, #010409 0%, #060d1a 40%, #010c1f 70%, #010409 100%);
+      border-bottom: 1px solid rgba(0,210,255,.1);
+      padding: 72px 20px 56px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -104,51 +116,83 @@
     .hero::before {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,210,255,.06) 0%, transparent 70%);
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,210,255,.08) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(255,215,0,.04) 0%, transparent 60%);
       pointer-events: none;
     }
+    /* Animated grid lines */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,210,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,210,255,.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; }
     .hero-eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 600;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 700;
       color: #00D2FF;
-      letter-spacing: .12em;
+      letter-spacing: .18em;
       text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-    .hero-eyebrow::before, .hero-eyebrow::after {
-      content: '';
-      width: 24px; height: 1px;
-      background: #00D2FF;
-      opacity: .5;
+      margin-bottom: 20px;
+      background: rgba(0,210,255,.06);
+      border: 1px solid rgba(0,210,255,.2);
+      border-radius: 20px;
+      padding: 5px 14px;
     }
 
     h1 {
-      font-size: clamp(26px, 5vw, 44px);
-      font-weight: 900;
-      line-height: 1.15;
-      letter-spacing: -.02em;
+      font-size: clamp(28px, 5.5vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.01em;
     }
     h1 .highlight {
-      background: linear-gradient(90deg, #FFD700, #00D2FF);
+      background: linear-gradient(90deg, #FFD700 0%, #00D2FF 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+    .hero-bangla-hook {
+      font-family: 'Li Ador Noirrit', 'Noto Sans Bengali', sans-serif;
+      font-size: clamp(17px, 3vw, 22px);
+      font-weight: 600;
+      color: rgba(255,255,255,.75);
+      margin-top: 16px;
+      letter-spacing: .01em;
+    }
     .hero-sub {
-      margin-top: 14px;
-      font-size: 16px;
-      color: #8b949e;
-      max-width: 560px;
+      margin-top: 10px;
+      font-size: 15px;
+      color: #6e7681;
+      max-width: 520px;
       margin-left: auto;
       margin-right: auto;
+      font-weight: 400;
     }
-    .bangla-note {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #6e7681;
+    .hero-chips {
+      margin-top: 24px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.12);
+      color: #8b949e;
+      background: rgba(255,255,255,.03);
+      letter-spacing: .04em;
     }
 
     /* ── MAIN CONTAINER ── */
@@ -956,76 +1000,235 @@
       line-height: 1;
     }
 
-    /* ── SUBNAV ── */
+    /* ── SUBNAV PILL BUTTONS ── */
+    #subnav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    #subnav::-webkit-scrollbar { display: none; }
     .subnav-link {
       display: inline-flex;
       align-items: center;
-      padding: 10px 16px;
+      gap: 6px;
+      padding: 7px 16px;
       font-size: 12px;
       font-weight: 600;
       color: #8b949e;
       text-decoration: none;
-      border-bottom: 2px solid transparent;
       white-space: nowrap;
-      transition: color .2s, border-color .2s;
-    }
-    .subnav-link:hover { color: #ffffff; border-bottom-color: #00D2FF; }
-
-    /* ── Q&A BLOCK ── */
-    .qa-chip {
-      background: rgba(255,255,255,.05);
-      border: 1px solid #21262d;
       border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      transition: all .2s cubic-bezier(.4,0,.2,1);
+      letter-spacing: .03em;
+    }
+    .subnav-link:hover {
+      color: #00D2FF;
+      border-color: rgba(0,210,255,.4);
+      background: rgba(0,210,255,.06);
+      box-shadow: 0 0 12px rgba(0,210,255,.1);
+    }
+    .subnav-link.active {
+      color: #00D2FF;
+      border-color: rgba(0,210,255,.5);
+      background: rgba(0,210,255,.08);
+    }
+
+    /* ── ASK CLAUDE SECTION — PREMIUM AI BLOCK ── */
+    .qa-section-wrap {
+      background: linear-gradient(135deg, #130920 0%, #0d1535 50%, #0a1929 100%);
+      border: 1px solid rgba(124,58,237,.3);
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .qa-section-wrap::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .qa-ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #cc785c;
+      background: rgba(204,120,92,.08);
+      border: 1px solid rgba(204,120,92,.3);
+      border-radius: 20px;
+      padding: 4px 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .qa-section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .qa-section-sub {
+      font-size: 12px;
       color: #8b949e;
+      margin-bottom: 18px;
+    }
+    .qa-chip {
+      background: rgba(124,58,237,.08);
+      border: 1px solid rgba(124,58,237,.25);
+      border-radius: 20px;
+      color: #a78bfa;
       font-family: inherit;
       font-size: 11px;
       font-weight: 600;
-      padding: 5px 12px;
+      padding: 5px 13px;
       cursor: pointer;
-      transition: border-color .2s, color .2s;
+      transition: all .25s cubic-bezier(.4,0,.2,1);
       white-space: nowrap;
     }
-    .qa-chip { transition: all .3s cubic-bezier(.4,0,.2,1); }
     .qa-chip:hover {
-      border-color: #00D2FF;
-      color: #00D2FF;
-      background: rgba(0,210,255,.05);
-      box-shadow: 0 0 12px rgba(0,210,255,.15);
+      border-color: rgba(124,58,237,.6);
+      color: #c4b5fd;
+      background: rgba(124,58,237,.15);
+      box-shadow: 0 0 16px rgba(124,58,237,.2);
       transform: translateY(-1px);
     }
     .qa-msg {
       font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.65;
       padding: 10px 14px;
       border-radius: 10px;
       max-width: 92%;
     }
     .qa-user {
-      background: #161b22;
-      border: 1px solid #21262d;
+      background: rgba(124,58,237,.1);
+      border: 1px solid rgba(124,58,237,.2);
       align-self: flex-end;
-      color: #ffffff;
+      color: #e2d9f3;
     }
     .qa-ai {
-      background: rgba(0,210,255,.07);
-      border: 1px solid rgba(0,210,255,.2);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
       align-self: flex-start;
       color: #cdd9e5;
     }
     .qa-ai.loading { opacity: .55; }
     .qa-input {
       flex: 1;
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(124,58,237,.3);
       border-radius: 10px;
       color: #ffffff;
       font-family: inherit;
       font-size: 14px;
       padding: 10px 14px;
-      transition: border-color .2s;
+      transition: border-color .2s, box-shadow .2s;
     }
-    .qa-input:focus { outline: none; border-color: #00D2FF; }
+    .qa-input:focus {
+      outline: none;
+      border-color: rgba(124,58,237,.7);
+      box-shadow: 0 0 0 3px rgba(124,58,237,.1);
+    }
     .qa-input::placeholder { color: #6e7681; }
+    .qa-send-btn {
+      background: linear-gradient(135deg, #7C3AED, #5b21b6);
+      border: none;
+      border-radius: 10px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 0 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      min-height: 44px;
+      transition: all .2s cubic-bezier(.4,0,.2,1);
+      letter-spacing: .04em;
+    }
+    .qa-send-btn:hover {
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      box-shadow: 0 4px 20px rgba(124,58,237,.4);
+      transform: translateY(-1px);
+    }
+
+    /* ── MANAGER.IO FEATURE SHOWCASE ── */
+    .managerio-wrap {
+      background: linear-gradient(135deg, #050f1a 0%, #071520 60%, #050e1a 100%);
+      border: 1px solid rgba(37,99,235,.25);
+      border-radius: 20px;
+      padding: 32px 24px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .managerio-wrap::before {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .managerio-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #60a5fa;
+      background: rgba(37,99,235,.08);
+      border: 1px solid rgba(37,99,235,.25);
+      border-radius: 20px;
+      padding: 4px 12px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .managerio-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .managerio-sub {
+      font-size: 13px;
+      color: #8b949e;
+      margin-bottom: 24px;
+      max-width: 480px;
+    }
+    .managerio-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .mf-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(37,99,235,.2);
+      border-radius: 12px;
+      padding: 16px;
+      transition: border-color .2s, background .2s, transform .15s;
+    }
+    .mf-card:hover {
+      border-color: rgba(37,99,235,.5);
+      background: rgba(37,99,235,.06);
+      transform: translateY(-2px);
+    }
+    .mf-icon { font-size: 22px; margin-bottom: 8px; }
+    .mf-title { font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px; }
+    .mf-desc  { font-size: 11px; color: #8b949e; line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -1033,10 +1236,15 @@
 <!-- HEADER -->
 <header>
   <a class="logo-wrap" href="https://inspiron.tech" target="_blank" rel="noopener">
-    <div class="logo-dot"></div>
+    <!-- INSPIRON TECH Logo SVG -->
+    <svg class="logo-svg-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="INSPIRON TECH logo">
+      <circle cx="29" cy="7" r="6" fill="#FFD700"/>
+      <rect x="6" y="0" width="5" height="36" rx="2.5" fill="#00D2FF"/>
+      <rect x="14" y="10" width="5" height="26" rx="2.5" fill="rgba(0,210,255,.5)"/>
+    </svg>
     <div>
       <div class="logo-text">INSPIRON TECH</div>
-      <div class="logo-sub">Official Manager.io Partner · Bangladesh</div>
+      <div class="logo-sub">Official Manager.io Partner &middot; Bangladesh</div>
     </div>
   </a>
   <span class="header-badge">🇧🇩 Free NBR Tool</span>
@@ -1104,23 +1312,32 @@
 </div>
 
 <!-- SUBNAV (desktop only) -->
-<nav style="background:rgba(1,4,9,.85);backdrop-filter:blur(12px);border-bottom:1px solid #21262d;padding:0 20px;display:flex;gap:0;overflow-x:auto;position:sticky;top:57px;z-index:99" id="subnav">
-  <a href="#section-deadlines" class="subnav-link">Deadlines</a>
-  <a href="#section-mushak" class="subnav-link">Mushak Forms</a>
-  <a href="#section-qa" class="subnav-link">Ask Claude</a>
-  <a href="#section-penalty" class="subnav-link">Penalty Calc</a>
-  <a href="#section-export" class="subnav-link">Export</a>
+<nav style="background:rgba(1,4,9,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,210,255,.08);position:sticky;top:57px;z-index:99" id="subnav">
+  <a href="#section-deadlines" class="subnav-link">&#128197; Deadlines</a>
+  <a href="#section-mushak" class="subnav-link">&#128203; Mushak Forms</a>
+  <a href="#section-qa" class="subnav-link">&#9775; Ask Claude</a>
+  <a href="#section-penalty" class="subnav-link">&#9888;&#65039; Penalty Calc</a>
+  <a href="#section-export" class="subnav-link">&#128202; Manager.io Export</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-eyebrow">NBR Compliance 2026</div>
-  <h1>Bangladesh <span class="highlight">Tax Calendar</span></h1>
-  <p class="hero-sub">
-    Get your VAT, Income Tax, TDS &amp; VDS deadlines in seconds.
-    Export directly to Manager.io. Free for all BD SMEs.
-  </p>
-  <p class="bangla-note">ভ্যাট · আয়কর · টিডিএস · ভিডিএস — সব ডেডলাইন এক জায়গায়</p>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">&#127987;&#8205;&#127756; NBR Compliance 2026</div>
+    <h1>Bangladesh <span class="highlight">Tax Calendar</span></h1>
+    <p class="hero-bangla-hook">আপনার ব্যবসার সব ট্যাক্স ডেডলাইন — এক ক্লিকে।</p>
+    <p class="hero-sub">
+      VAT &middot; Income Tax &middot; TDS &middot; VDS deadlines, penalties &amp; Manager.io export.<br>
+      Built for Bangladesh SMEs. Free. No login.
+    </p>
+    <div class="hero-chips">
+      <span class="hero-chip">&#10003; Mushak-9.1 &amp; 6.3</span>
+      <span class="hero-chip">&#10003; TDS Form 108</span>
+      <span class="hero-chip">&#10003; Corporate ITR extended</span>
+      <span class="hero-chip">&#10003; Manager.io CSV export</span>
+      <span class="hero-chip">&#10003; AI tax Q&amp;A</span>
+    </div>
+  </div>
 </section>
 
 <!-- MAIN -->
@@ -1201,20 +1418,18 @@
       </table>
     </div>
 
-    <!-- Mushak Explainer -->
+    <!-- Mushak Explainer — navy section background -->
     <p class="section-title" style="margin-top:28px" id="section-mushak">Mushak Forms Explained</p>
-    <div class="mushak-grid" id="mushakGrid">
-      <!-- Populated by JS -->
-    </div>
+    <div style="background:linear-gradient(135deg,#060d1a,#0a1929);border:1px solid rgba(0,210,255,.1);border-radius:16px;padding:20px;margin-bottom:28px">
+      <div class="mushak-grid" id="mushakGrid">
+      </div>
+    </div><!-- /mushak navy wrap -->
 
-    <!-- ── CLAUDE Q&A ── -->
-    <p class="section-title" style="margin-top:28px" id="section-qa">
-      Ask NBR Tax Questions
-      <span style="display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:700;color:#cc785c;letter-spacing:.06em;background:rgba(204,120,92,.1);border:1px solid rgba(204,120,92,.3);border-radius:20px;padding:2px 9px;margin-left:6px;text-transform:uppercase;vertical-align:middle">
-        ⬡ Powered by Claude
-      </span>
-    </p>
-    <div class="penalty-card" id="qa-section">
+    <!-- ASK CLAUDE — PREMIUM AI SECTION -->
+    <div class="qa-section-wrap" id="section-qa">
+      <div class="qa-ai-badge">&#9977; Powered by Anthropic Claude</div>
+      <div class="qa-section-title">Ask NBR Tax Questions</div>
+      <div class="qa-section-sub">Bangladesh tax law, Mushak forms, deadlines, penalties — ask in English or Bangla.</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px" id="qa-chips">
         <button class="qa-chip" onclick="askQ('What is Mushak 9.1 and when is it due?')">What is Mushak 9.1?</button>
         <button class="qa-chip" onclick="askQ('What is the penalty for late VAT return filing in Bangladesh?')">Late VAT penalty?</button>
@@ -1227,7 +1442,7 @@
       </div>
       <div style="display:flex;gap:8px" id="qa-input-row">
         <input type="text" id="qa-input" class="qa-input" placeholder="e.g. When is the Mushak 9.1 deadline for July?" onkeydown="if(event.key==='Enter')sendQ()" />
-        <button class="calc-btn haptic-btn" style="width:auto;padding:0 20px;margin-top:0;white-space:nowrap" onclick="sendQ()">Ask ↗</button>
+        <button class="qa-send-btn haptic-btn" onclick="sendQ()">Ask ↗</button>
       </div>
     </div>
 
@@ -1305,22 +1520,54 @@
       </div>
     </div>
 
-    <!-- CTA -->
-    <div class="cta-card">
-      <h2>Need a Full Manager.io Setup?</h2>
-      <p>
-        We are Bangladesh's only Official Manager.io Partner. We architect your entire Chart of Accounts,
-        multi-division structure, VAT/TDS compliance, and more — at 0.01% precision.
-      </p>
+    <!-- Manager.io Feature Showcase -->
+    <div class="managerio-wrap">
+      <div class="managerio-eyebrow">&#127381; Official Manager.io Partner</div>
+      <div class="managerio-title">Why BD SMEs Choose Manager.io</div>
+      <div class="managerio-sub">The world's most flexible accounting software — designed for businesses of any size, any industry, anywhere.</div>
+      <div class="managerio-features">
+        <div class="mf-card">
+          <div class="mf-icon">♾️</div>
+          <div class="mf-title">Unlimited Users</div>
+          <div class="mf-desc">No per-user fees — ever. Your entire team, accountants, and advisors on one subscription.</div>
+        </div>
+        <div class="mf-card">
+          <div class="mf-icon">&#127970;</div>
+          <div class="mf-title">Unlimited Businesses</div>
+          <div class="mf-desc">Manage all your entities under one subscription. Switch between companies in seconds.</div>
+        </div>
+        <div class="mf-card">
+          <div class="mf-icon">&#128241;</div>
+          <div class="mf-title">Any Device &middot; Any Tab</div>
+          <div class="mf-desc">Desktop app, browser, tablet — open multiple companies simultaneously in separate windows.</div>
+        </div>
+        <div class="mf-card">
+          <div class="mf-icon">&#9881;&#65039;</div>
+          <div class="mf-title">Custom Workflows</div>
+          <div class="mf-desc">From garment manufacturing and commission agents to real estate and import/export — adapts to any business logic.</div>
+        </div>
+        <div class="mf-card">
+          <div class="mf-icon">&#127468;&#127463;</div>
+          <div class="mf-title">Multi-Currency &middot; Multi-Division</div>
+          <div class="mf-desc">BDT, PKR, AED in one system. Divisional P&amp;L, project tracking, and custom reports built in.</div>
+        </div>
+        <div class="mf-card">
+          <div class="mf-icon">&#128202;</div>
+          <div class="mf-title">Bangladesh VAT Ready</div>
+          <div class="mf-desc">Mushak-9.1, VDS, TDS — pre-configured by INSPIRON TECH for BD compliance out of the box.</div>
+        </div>
+      </div>
       <div class="cta-btn-row">
         <a class="btn-primary" href="mailto:hello@inspiron.tech?subject=Manager.io%20Setup%20Inquiry">
-          📧 Book a Free Consultation
+          &#128231; Book a Free Consultation
         </a>
         <a class="btn-secondary" href="https://wa.me/8801719300849" target="_blank" rel="noopener">
-          💬 WhatsApp Us
+          &#128172; WhatsApp Us
         </a>
       </div>
     </div>
+
+    <!-- Old CTA removed — Manager.io showcase above replaces it -->
 
     <!-- Comparison Table -->
     <p class="section-title">How We Compare</p>
@@ -1404,21 +1651,33 @@
 </main>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-logo">INSPIRON TECH</div>
-  <div class="footer-tagline">"I do not install software. I architect logic."</div>
+<footer style="background:linear-gradient(180deg,#010409 0%,#060d1a 100%);border-top:1px solid rgba(0,210,255,.1);padding:40px 20px 28px;text-align:center">
+  <!-- Logo -->
+  <a href="https://inspiron.tech" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:14px">
+    <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+      <circle cx="29" cy="7" r="6" fill="#FFD700"/>
+      <rect x="6" y="0" width="5" height="36" rx="2.5" fill="#00D2FF"/>
+      <rect x="14" y="10" width="5" height="26" rx="2.5" fill="rgba(0,210,255,.5)"/>
+    </svg>
+    <div style="text-align:left">
+      <div style="font-size:15px;font-weight:700;color:#FFD700;letter-spacing:.06em">INSPIRON TECH</div>
+      <div style="font-size:9px;color:#8b949e;letter-spacing:.1em;text-transform:uppercase">Official Manager.io Partner &middot; Bangladesh</div>
+    </div>
+  </a>
+  <div style="font-size:12px;color:#6e7681;margin-bottom:18px;font-style:italic">&ldquo;I do not install software. I architect logic.&rdquo;</div>
   <div class="footer-links">
     <a href="https://inspiron.tech" target="_blank" rel="noopener">Website</a>
     <a href="mailto:hello@inspiron.tech">hello@inspiron.tech</a>
     <a href="https://wa.me/8801719300849" target="_blank" rel="noopener">WhatsApp</a>
     <a href="https://manager.io/advisors" target="_blank" rel="noopener">Manager.io Partner</a>
   </div>
-  <div style="margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:8px">
+  <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:8px">
     <span style="font-size:11px;color:#6e7681">AI Q&amp;A powered by</span>
     <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#cc785c;background:rgba(204,120,92,.08);border:1px solid rgba(204,120,92,.25);border-radius:20px;padding:3px 10px">
-      ⬡ Anthropic Claude
+      &#9977; Anthropic Claude
     </span>
   </div>
+  <div style="font-size:11px;font-weight:700;color:#8b949e;letter-spacing:.06em;margin-bottom:6px">DESIGNED &amp; DEVELOPED BY MD ABU HASAN</div>
   <div class="footer-disclaimer">
     Deadlines based on NBR rules as of April 2026. Always verify with your tax advisor for the latest circulars.
     This tool is provided free under MIT license as a community resource.
