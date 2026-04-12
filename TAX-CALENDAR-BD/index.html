@@ -1455,8 +1455,8 @@
         bangla: 'মাসিক ভ্যাট রিটার্ন',
         period: periodDate.toLocaleString('default', { month: 'long', year: 'numeric' }),
         dueDate,
-        penalty: 'Min. Tk 10,000 + interest on unpaid tax',
-        account: 'VAT Payable',
+        penalty: 'Min. Tk 10,000 + 2% interest/month on unpaid tax',
+        account: 'Output VAT Payable - Mushak-9.1',
         memo: 'Monthly VAT Return — submit via eVAT portal'
       });
     }
@@ -1472,7 +1472,7 @@
           bangla: 'উৎসে ভ্যাট কর্তন',
           period: periodDate.toLocaleString('default', { month: 'long', year: 'numeric' }),
           dueDate,
-          penalty: 'Fixed penalty + interest on unpaid VDS',
+          penalty: 'Fixed penalty + 2% interest/month on unpaid VDS',
           account: 'VDS Payable',
           memo: 'Monthly VDS Return — for registered deductors'
         });
@@ -1489,18 +1489,8 @@
         period: 'AY 2025-26',
         dueDate: new Date('2026-04-15'),
         penalty: 'Tk 1,000/month delay + 2% interest/month on unpaid tax',
-        account: 'Corporate Tax Payable',
+        account: 'Corporate Income Tax Payable',
         memo: 'Corporate Income Tax Return (AY 2025-26) — Extended to 15 Apr 2026 per NBR order'
-      });
-      deadlines.push({
-        type: 'INCOME-TAX',
-        description: 'Corporate Income Tax Return — AY 2026-27',
-        bangla: 'কর্পোরেট আয়কর রিটার্ন',
-        period: 'AY 2026-27',
-        dueDate: new Date('2027-01-15'),
-        penalty: 'Tk 1,000/month delay + 2% interest/month on unpaid tax',
-        account: 'Corporate Tax Payable',
-        memo: 'Corporate Income Tax Return (AY 2026-27)'
       });
     } else {
       deadlines.push({
@@ -1512,16 +1502,6 @@
         penalty: 'Tk 1,000/month delay + 2% simple interest/month on unpaid tax',
         account: 'Income Tax Payable',
         memo: 'Individual Income Tax Return (AY 2025-26) — verify extension at etaxnbr.gov.bd'
-      });
-      deadlines.push({
-        type: 'INCOME-TAX',
-        description: 'Individual Income Tax Return — AY 2026-27',
-        bangla: 'ব্যক্তিগত আয়কর রিটার্ন',
-        period: 'AY 2026-27',
-        dueDate: new Date('2026-11-30'),
-        penalty: 'Tk 1,000/month delay + 2% simple interest/month on unpaid tax',
-        account: 'Income Tax Payable',
-        memo: 'Individual Income Tax Return (AY 2026-27)'
       });
     }
 
@@ -1539,7 +1519,7 @@
         period,
         dueDate: date,
         penalty: '2% simple interest/month on shortfall amount',
-        account: 'Advance Tax',
+        account: 'Advance Income Tax',
         memo: `Advance Tax Instalment — ${period} — ${pct}`
       });
     });
