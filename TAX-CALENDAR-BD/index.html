@@ -1582,9 +1582,9 @@
     const tbody = document.getElementById('deadlinesBody');
     tbody.innerHTML = '';
 
-    /* Stat cards */
-    const urgentCount = deadlines.filter(d => { const dl = daysLeft(d.dueDate); return dl >= 0 && dl <= 14; }).length;
-    const monthCount  = deadlines.filter(d => { const dl = daysLeft(d.dueDate); return dl >= 0 && dl <= 30; }).length;
+    /* Stat cards — counts overdue as urgent (critical for April 2026) */
+    const urgentCount = deadlines.filter(d => { const dl = daysLeft(d.dueDate); return dl <= 14; }).length;
+    const monthCount  = deadlines.filter(d => { const dl = daysLeft(d.dueDate); return dl <= 30; }).length;
     document.getElementById('stat-urgent').textContent = urgentCount || '0';
     document.getElementById('stat-month').textContent  = monthCount  || '0';
 
@@ -1639,27 +1639,35 @@
     if (!days && !amount) { el.classList.remove('show'); return; }
 
     let penalty = 0, breakdown = '';
-    const months = Math.ceil(days / 30); // penalty calculated per month
-    const monthlyInterest = amount * 0.02 * months; // 2% simple interest per month
+    const months = Math.ceil(days / 30);
 
     switch(type) {
-      case 'vat':
-        penalty = Math.max(10000, monthlyInterest);
-        breakdown = `Min Tk 10,000 flat OR 2%/month × ${months} month(s) on Tk ${amount.toLocaleString()} = Tk ${Math.round(monthlyInterest).toLocaleString()} — whichever is higher`;
+      case 'vat': {
+        const filingFee = 2000;                           // Section 85(f) — fixed late filing
+        const interestVat = amount * 0.02 * months;      // 2% per month on unpaid tax
+        penalty = filingFee + interestVat;
+        breakdown = `Tk 2,000 late filing fee + 2% per month × ${months} month(s) on Tk ${amount.toLocaleString()} = Tk ${Math.round(interestVat).toLocaleString()}`;
         break;
-      case 'income':
-        const lateMonths = months * 1000; // Tk 1,000 per month
-        penalty = lateMonths + monthlyInterest;
-        breakdown = `Tk 1,000 × ${months} month(s) = Tk ${lateMonths.toLocaleString()} late fee + 2% interest × ${months} month(s) on Tk ${amount.toLocaleString()} = Tk ${Math.round(monthlyInterest).toLocaleString()}`;
+      }
+      case 'income': {
+        const lateFee = months * 1000;                   // Tk 1,000 per month — Income Tax Act 2023 §266
+        const interestInc = amount * 0.02 * months;      // 2% per month on unpaid tax
+        penalty = lateFee + interestInc;
+        breakdown = `Tk 1,000 × ${months} month(s) late fee + 2% interest × ${months} month(s) on Tk ${amount.toLocaleString()}`;
         break;
-      case 'tds':
-        penalty = Math.max(5000, monthlyInterest);
-        breakdown = `Min Tk 5,000 flat OR 2%/month × ${months} month(s) on Tk ${amount.toLocaleString()} = Tk ${Math.round(monthlyInterest).toLocaleString()} — whichever is higher`;
+      }
+      case 'tds': {
+        const interestTds = amount * 0.02 * months;
+        penalty = Math.max(5000, interestTds);
+        breakdown = `Min Tk 5,000 fixed OR 2% per month × ${months} month(s) on Tk ${amount.toLocaleString()} — whichever higher`;
         break;
-      case 'vds':
-        penalty = Math.max(10000, monthlyInterest);
-        breakdown = `Min Tk 10,000 flat OR 2%/month × ${months} month(s) on Tk ${amount.toLocaleString()} = Tk ${Math.round(monthlyInterest).toLocaleString()} — whichever is higher`;
+      }
+      case 'vds': {
+        const interestVds = amount * 0.02 * months;
+        penalty = Math.max(10000, interestVds);
+        breakdown = `Min Tk 10,000 fixed OR 2% per month × ${months} month(s) on Tk ${amount.toLocaleString()} — whichever higher`;
         break;
+      }
     }
 
     document.getElementById('penaltyAmount').textContent = `BDT ${Math.round(penalty).toLocaleString()}`;
