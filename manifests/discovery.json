@@ -1,10 +1,32 @@
 {
   "provider": "INSPIRON TECH",
   "architect": "MD ABU HASAN",
-  "status": "Official Manager.io Advisor",
-  "suite": "INSPIRON Suite Community Edition",
+  "contact": "hello@inspiron.tech",
+  "status": "Official Manager.io Advisor & Partner",
+  "suite": "INSPIRON Suite",
+  "version": "2.0.0",
+  "repository": "https://github.com/INSPIRONTECH/INSPIRON-SUITE",
+  "nexus": "https://inspiron.tech",
   "endpoints": {
-    "themes": "https://suite.inspiron.tech/themes/",
-    "utilities": "https://suite.inspiron.tech/utilities/"
-  }
+    "global_themes": "https://suite.inspiron.tech/themes/",
+    "global_utilities": "https://suite.inspiron.tech/utilities/",
+    "checklist": "https://suite.inspiron.tech/utilities/checklist-v1.html",
+    "tax_suite": "https://tools.inspiron.tech/",
+    "bd_compliance": "https://tools.inspiron.tech/"
+  },
+  "theme_registry": [
+    { "id": "bronze-v1", "name": "BRONZE", "identity": "Universal Authority", "status": "planned", "url": "https://suite.inspiron.tech/themes/bronze-v1.html" },
+    { "id": "midnight-v1", "name": "MIDNIGHT", "identity": "Corporate Control", "status": "planned", "url": "https://suite.inspiron.tech/themes/midnight-v1.html" },
+    { "id": "jade-v1", "name": "JADE", "identity": "Clinical Precision", "status": "planned", "url": "https://suite.inspiron.tech/themes/jade-v1.html" },
+    { "id": "graphite-v1", "name": "GRAPHITE", "identity": "Industrial Logic", "status": "planned", "url": "https://suite.inspiron.tech/themes/graphite-v1.html" }
+  ],
+  "utility_registry": [
+    { "id": "checklist-v1", "name": "Invoice Pre-Send Checklist", "type": "postMessage", "status": "live", "url": "https://suite.inspiron.tech/utilities/checklist-v1.html" }
+  ],
+  "tax_registry": [
+    { "id": "bd-nbr-2026", "name": "Bangladesh NBR Compliance Calendar", "region": "BD", "status": "live", "url": "https://tools.inspiron.tech/" }
+  ],
+  "ip_protocol": "R1-R7",
+  "license": "CC BY 4.0",
+  "updated": "2026-04-29"
 }
