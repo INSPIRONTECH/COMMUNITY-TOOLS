@@ -1,0 +1,10 @@
+{
+  "provider": "INSPIRON TECH",
+  "architect": "MD ABU HASAN",
+  "status": "Official Manager.io Advisor",
+  "suite": "INSPIRON Suite Community Edition",
+  "endpoints": {
+    "themes": "https://suite.inspiron.tech/themes/",
+    "utilities": "https://suite.inspiron.tech/utilities/"
+  }
+}

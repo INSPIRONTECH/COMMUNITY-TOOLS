@@ -1,0 +1,12 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Content-Security-Policy", "value": "frame-ancestors https://*.manager.io http://localhost:*" },
+        { "key": "X-Frame-Options", "value": "ALLOW-FROM https://*.manager.io" }
+      ]
+    }
+  ]
+}
