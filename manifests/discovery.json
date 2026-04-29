@@ -20,6 +20,13 @@
     { "id": "jade-v1", "name": "JADE", "identity": "Clinical Precision", "status": "planned", "url": "https://suite.inspiron.tech/themes/jade-v1.html" },
     { "id": "graphite-v1", "name": "GRAPHITE", "identity": "Industrial Logic", "status": "planned", "url": "https://suite.inspiron.tech/themes/graphite-v1.html" }
   ],
+  "utilities": [
+    {
+      "id": "inspiron-pre-send-checklist",
+      "name": "Invoice Pre-Send Checklist",
+      "url": "https://suite.inspiron.tech/utilities/checklist-v1.html"
+    }
+  ],
   "utility_registry": [
     { "id": "checklist-v1", "name": "Invoice Pre-Send Checklist", "type": "postMessage", "status": "live", "url": "https://suite.inspiron.tech/utilities/checklist-v1.html" }
   ],

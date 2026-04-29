@@ -3,235 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice Pre-Send Checklist · INSPIRON Suite</title>
+    <title>INSPIRON Checklist | Manager.io Sidebar</title>
     <style>
-        :root {
-            --it-fail: #dc2626;
-            --it-warn: #d97706;
-            --it-pass: #059669;
-            --it-bg: #f8fafc;
-            --it-border: #e2e8f0;
-            --it-text: #0f172a;
-            --it-muted: #64748b;
+        :root { 
+            --it-cyan: #00D2FF; --it-gold: #FFD700; --it-fail: #dc2626; 
+            --it-pass: #059669; --it-bg: #0d1117; --it-card: #161b22; 
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--it-bg);
-            padding: 14px;
-            font-size: 13px;
-            color: var(--it-text);
-            min-height: 100vh;
+        body { 
+            font-family: 'Neo Sans Pro', -apple-system, sans-serif; 
+            background: var(--it-bg); color: #fff; padding: 15px; font-size: 13px; 
+            margin: 0; border-left: 2px solid var(--it-cyan); min-height: 100vh;
         }
-
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--it-border);
-        }
-
-        .header-logo {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: var(--it-muted);
-            text-transform: uppercase;
-        }
-
-        .header-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--it-text);
-        }
-
-        .summary-bar {
-            padding: 11px 14px;
-            border-radius: 7px;
-            text-align: center;
-            font-weight: 800;
-            font-size: 13px;
-            margin-bottom: 12px;
-            border: 2px solid transparent;
-            letter-spacing: 0.02em;
-            transition: all 0.3s ease;
-        }
-
-        .summary-waiting {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-            color: var(--it-muted);
-        }
-
-        .summary-fail {
-            background: #fee2e2;
-            border-color: var(--it-fail);
-            color: var(--it-fail);
-        }
-
-        .summary-pass {
-            background: #dcfce7;
-            border-color: var(--it-pass);
-            color: var(--it-pass);
-        }
-
-        .checks-list {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
-
-        .check-item {
-            background: white;
-            border: 1px solid var(--it-border);
-            border-radius: 7px;
-            padding: 10px 12px;
-            border-left: 4px solid #cbd5e1;
-            transition: all 0.25s ease;
-        }
-
-        .check-item.type-fail {
-            border-left-color: var(--it-fail);
-            background: #fff5f5;
-        }
-
-        .check-item.type-pass {
-            border-left-color: var(--it-pass);
-            opacity: 0.65;
-        }
-
-        .check-label {
-            font-weight: 700;
-            font-size: 12px;
-        }
-
-        .check-msg {
-            font-size: 11px;
-            color: var(--it-muted);
-            margin-top: 2px;
-        }
-
-        .footer {
-            margin-top: 14px;
-            padding-top: 10px;
-            border-top: 1px solid var(--it-border);
-            font-size: 10px;
-            color: var(--it-muted);
-            text-align: center;
-            letter-spacing: 0.04em;
-        }
-
-        .footer a {
-            color: #0ea5e9;
-            text-decoration: none;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border: 2px solid #cbd5e1;
-            border-top-color: #0ea5e9;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-right: 6px;
-            vertical-align: middle;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        .header { font-weight: 800; color: var(--it-gold); margin-bottom: 15px; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+        .summary-bar { padding: 12px; border-radius: 6px; text-align: center; font-weight: 800; margin-bottom: 15px; border: 1px solid transparent; }
+        .summary-fail { background: rgba(220, 38, 38, 0.1); border-color: var(--it-fail); color: var(--it-fail); }
+        .summary-pass { background: rgba(5, 150, 105, 0.1); border-color: var(--it-pass); color: var(--it-pass); }
+        .check-item { background: var(--it-card); border: 1px solid #30363d; border-radius: 6px; padding: 10px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .status-icon { font-size: 16px; }
+        .msg { flex: 1; }
+        .footer { font-size: 10px; color: #8b949e; text-align: center; margin-top: 20px; font-style: italic; }
     </style>
 </head>
 <body>
-
-    <div class="header">
-        <span class="header-logo">INSPIRON SUITE</span>
-        <span style="color: var(--it-border);">·</span>
-        <span class="header-title">Invoice Pre-Send Checklist</span>
-    </div>
-
-    <div id="summary" class="summary-bar summary-waiting">
-        <span class="spinner"></span> Waiting for document context...
-    </div>
-
-    <div id="checks" class="checks-list"></div>
-
-    <div class="footer">
-        Powered by <a href="https://suite.inspiron.tech" target="_blank">INSPIRON Suite</a>
-        · <a href="https://inspiron.tech" target="_blank">inspiron.tech</a>
-    </div>
+    <div class="header">INSPIRON Audit Sentinel</div>
+    <div id="summary" class="summary-bar">Scanning Document...</div>
+    <div id="checks"></div>
+    <div class="footer">"I do not install software. I architect logic."</div>
 
     <script>
-        // Request document context from Manager.io parent frame
-        window.parent.postMessage({ type: "context-request" }, "*");
-
-        // Listen for Manager.io context-response
         window.addEventListener("message", (event) => {
             if (event.data.type !== 'context-response') return;
-
             const data = event.data.body;
-
+            
+            // Logic-Neutral Validation Checks (R1 Protocol)
             const checks = [
-                {
-                    label: "Billing Address",
-                    pass: !!(data.recipient?.address),
-                    msg: "Add a bill-to address for this document"
-                },
-                {
-                    label: "Reference / Invoice No.",
-                    pass: !!(data.reference),
-                    msg: "Set an invoice reference number"
-                },
-                {
-                    label: "Document Total",
-                    pass: (
-                        (data.table?.totals?.find(t => t.key === "Total")?.number || 0) > 0
-                    ),
-                    msg: "Zero total detected — check line items"
-                },
-                {
-                    label: "Due Date",
-                    pass: !!(data.due_date),
-                    msg: "No due date set — add payment terms"
-                },
-                {
-                    label: "Customer Name",
-                    pass: !!(data.recipient?.name),
-                    msg: "Recipient name is missing"
-                }
+                { label: "Billing Address", pass: !!(data.recipient?.address), error: "Recipient address is missing" },
+                { label: "Reference No", pass: !!data.reference, error: "Invoice reference is empty" },
+                { label: "Total Balance", pass: (data.table?.totals?.find(t => t.key === "Total")?.number || 0) > 0, error: "Zero balance detected" },
+                { label: "Issue Date", pass: !!data.issueDate, error: "Document date is not set" }
             ];
 
             const hasFail = checks.some(c => !c.pass);
-            const failCount = checks.filter(c => !c.pass).length;
-
-            const summaryEl = document.getElementById('summary');
-            summaryEl.className = `summary-bar ${hasFail ? 'summary-fail' : 'summary-pass'}`;
-            summaryEl.innerHTML = hasFail
-                ? `❌ ${failCount} issue${failCount > 1 ? 's' : ''} found — review before sending`
-                : `✅ All checks passed — ready to send`;
+            const summary = document.getElementById('summary');
+            summary.className = `summary-bar ${hasFail ? 'summary-fail' : 'summary-pass'}`;
+            summary.innerText = hasFail ? "❌ AUDIT FAILED" : "✅ READY TO SEND";
 
             document.getElementById('checks').innerHTML = checks.map(c => `
-                <div class="check-item ${c.pass ? 'type-pass' : 'type-fail'}">
-                    <div class="check-label">${c.pass ? '✅' : '❌'} ${c.label}</div>
-                    <div class="check-msg">${c.pass ? 'Valid' : c.msg}</div>
-                </div>
-            `).join('');
+                <div class="check-item" style="border-left: 3px solid ${c.pass ? 'var(--it-pass)' : 'var(--it-fail)'}">
+                    <span class="status-icon">${c.pass ? '✓' : '⚠️'}</span>
+                    <div class="msg">
+                        <div style="font-weight:700; color:${c.pass ? '#fff' : 'var(--it-fail)'}">${c.label}</div>
+                        <div style="font-size:11px; color:#8b949e">${c.pass ? 'Verified' : c.error}</div>
+                    </div>
+                </div>`).join('');
         });
 
-        // Retry context request after 3s if no response (for testing outside Manager.io)
-        setTimeout(() => {
-            const summary = document.getElementById('summary');
-            if (summary.classList.contains('summary-waiting')) {
-                summary.innerHTML = '⚠️ No Manager.io context detected — open inside Manager.io';
-                summary.className = 'summary-bar summary-waiting';
-            }
-        }, 3000);
+        // Request context from Manager.io parent
+        window.parent.postMessage({ type: "context-request" }, "*");
     </script>
-
 </body>
 </html>
