@@ -1,9 +1,11 @@
 <div align="center">
+
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:010409,50:0d1117,100:00D2FF&height=240&section=header&text=INSPIRON%20SUITE&fontSize=52&fontColor=FFFFFF&fontAlignY=35&desc=Global%20Business%20Architecture%20for%20Manager.io&descSize=18&descAlignY=55&animation=fadeIn" width="100%">
 
 [![Manager.io Advisor](https://img.shields.io/badge/Manager.io-Official%20Advisor%20%26%20Partner-FFD700?style=for-the-badge&logoColor=white)](https://manager.io/advisors)
 [![AI: Claude-Powered](https://img.shields.io/badge/AI%20Intelligence-Claude--Enhanced-cc785c?style=for-the-badge&logoColor=white)](https://anthropic.com)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-00D2FF?style=for-the-badge)](https://creativecommons.org/licenses/by/4.0/)
+[![Ecosystem: Stable](https://img.shields.io/badge/Ecosystem-v2026%20Production-30D158?style=for-the-badge)](https://inspiron.tech)
 
 </div>
 
@@ -13,100 +15,64 @@
 
 > "I do not install software. I architect logic." — **MD ABU HASAN**
 
-**INSPIRON Suite** is the global standard for high-authority themes and logic extensions for **Manager.io** — the world's most accessible business accounting platform.
-
-Built and maintained by **INSPIRON TECH**, Bangladesh's only listed Manager.io Advisor and Official Manager.io Partner, this suite provides:
-
-- **Presentation Layer** — Premium HTML/CSS invoice and document themes
-- **Intelligence Layer** — Validation utilities via Manager.io `postMessage` API
-- **Regional Layer** — Bangladesh NBR VAT compliance modules
+The **INSPIRON Suite** is a global ecosystem of high-authority themes and functional extensions for **Manager.io**. Designed for the C-Suite, the CFO, and the Industrial Architect, this suite provides a **Universal Canvas** for businesses that demand precision, compliance, and 100% print-safety.
 
 ---
 
-### 🚀 Theme Suite (Presentation Layer)
+### 🚀 Community Edition: Theme Catalog
+Every theme in the Community Edition is built on the **Universal Canvas** protocol: Grayscale-neutral headers to support any brand logo color, optimized for A4 300 DPI output.
 
-| Series | Identity | Install |
-| :--- | :--- | :--- |
-| **BRONZE** | Universal Authority | [/themes/bronze-v1.html](https://suite.inspiron.tech/themes/bronze-v1.html) |
-| **MIDNIGHT** | Corporate Control | [/themes/midnight-v1.html](https://suite.inspiron.tech/themes/midnight-v1.html) |
-| **JADE** | Clinical Precision | [/themes/jade-v1.html](https://suite.inspiron.tech/themes/jade-v1.html) |
-| **GRAPHITE** | Industrial Logic | [/themes/graphite-v1.html](https://suite.inspiron.tech/themes/graphite-v1.html) |
-
-> All themes are served from `https://suite.inspiron.tech/themes/`
-
----
-
-### 🛠️ Utility Suite (Intelligence Layer)
-
-#### 🔍 Invoice Pre-Send Checklist
-
-A **Validation Bridge** that audits your Manager.io document in real-time via the `postMessage` API — before you hit send.
-
-**Checks performed:**
-- ❌ Missing billing address (recipient)
-- ❌ Missing reference / invoice number
-- ❌ Zero-balance total detection
-
-**Live Link:** [`https://suite.inspiron.tech/utilities/checklist-v1.html`](https://suite.inspiron.tech/utilities/checklist-v1.html)
-
-**Install in Manager.io:**
-1. Go to **Settings → Custom Fields → HTML Widgets**
-2. Paste the live link as an embedded utility
-3. The widget auto-reads context from the open document
+| Series | Identity | Purpose | Deployment |
+| :--- | :--- | :--- | :--- |
+| **UNIVERSAL BRONZE** | `Universal` | General B2B / Technical Authority | [Install URL](https://suite.inspiron.tech/global-suite/themes/UNIVERSAL-BRONZE-v1.html) |
+| **MIDNIGHT CORPORATE** | `Corporate` | CFO / Enterprise / Financial Control | [Install URL](https://suite.inspiron.tech/global-suite/themes/MIDNIGHT-CORPORATE-v1.html) |
+| **JADE CLINICAL** | `Clinical` | Healthcare / NGO / Laboratory (LIS) | [Install URL](https://suite.inspiron.tech/global-suite/themes/JADE-CLINICAL-v1.html) |
+| **GRAPHITE INDUSTRIAL** | `Industrial` | Supply Chain / Systems Logic / HMI | [Install URL](https://suite.inspiron.tech/global-suite/themes/GRAPHITE-INDUSTRIAL-v1.html) |
 
 ---
 
-### 🇧🇩 Tax Suite (Specialized Regional Layer)
+### 🛠️ Global Utility: Logic Extensions
+Moving beyond static layouts, INSPIRON extensions provide real-time operational intelligence inside the Manager.io sidebar.
 
-Specialized compliance modules for the **Bangladesh NBR** environment.
-
-- **AI VAT Guidance** — Real-time interpretation powered by Claude AI
-- **Mushak 6.3 / 9.1 Support** — Pre-formatted output aligned to NBR requirements
-- **Nexus Portal:** [`https://tools.inspiron.tech`](https://tools.inspiron.tech)
-
----
-
-### 📦 Monorepo Structure
-
-```
-INSPIRON-SUITE/
-├── global-suite/
-│   ├── themes/          ← HTML/CSS invoice themes (all markets)
-│   └── utilities/       ← Validation & intelligence widgets
-├── tax-suite/
-│   └── bd-compliance/   ← Bangladesh NBR-specific modules
-└── manifests/
-    └── discovery.json   ← Manager.io marketplace metadata
-```
+#### 🔍 Invoice Pre-Send Checklist (v1.1)
+A "Validation Bridge" that audits your document context via `postMessage` before transmission.
+- **Redline Detection:** Flags missing due dates, missing references, and zero-balance errors.
+- **Mushak 6.3 Compliance:** Detects and enforces mandatory Buyer BIN on Bangladesh formats.
+- **Logic-Aware:** Automatically detects Credit Notes and Pro-forma documents to adjust validation severity.
+- **Install Link:** `https://suite.inspiron.tech/utilities/checklist-v1.html`
 
 ---
 
-### ⚖️ License & IP
+### 🇧🇩 Regional Specialized Layer: Bangladesh SME Suite
+For businesses operating under NBR jurisdiction, we provide a specialized compliance layer architected for the local regulatory environment.
 
-This repository is licensed under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**.
+- **Mushak 6.3 Standard:** Automated VAT/TDS routing logic.
+- **AI-Enhanced Guidance:** Real-time VAT/Tax interpretation in Bangla & English, powered by Claude.
+- **Local Trust:** Validated for Bangladesh SME compliance standards.
+- **Live Link:** `https://tools.inspiron.tech`
 
-You are free to use, adapt, and share — with attribution to **INSPIRON TECH / MD ABU HASAN**.
+---
 
-**All classification logic, decision engines, and private utilities remain proprietary.** See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full R1–R7 IP Protection Protocol.
+### 🛡️ IP & Integrity Protocol (R1–R7)
+All tools in this repository follow the **INSPIRON Logic Boundary**. We ship the **Presentation Layer** to the community while the **Proprietary Logic Engine** remains secured in private vaults.
+
+**Full Protocol Details:** [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ---
 
 ### 🤝 Strategic Engagement
-
-Architected by **MD ABU HASAN** · *Founder & Chief Architect, INSPIRON TECH*
-
-| Channel | Link |
-| :--- | :--- |
-| 🌐 INSPIRON NEXUS | [inspiron.tech](https://inspiron.tech) |
-| 📧 Email | [hello@inspiron.tech](mailto:hello@inspiron.tech) |
-| 💼 Manager.io Advisor | [manager.io/advisors](https://manager.io/advisors) |
-| 🔗 Upwork | [upwork.com/freelancers/~011085e2a7cde3f437](https://upwork.com/freelancers/~011085e2a7cde3f437) |
+Architected & Developed by **MD ABU HASAN** *Founder & Chief Architect, INSPIRON TECH*
 
 <div align="center">
 
-[![INSPIRON NEXUS](https://img.shields.io/badge/INSPIRON%20NEXUS-suite.inspiron.tech-00D2FF?style=for-the-badge&logo=vercel&logoColor=white)](https://suite.inspiron.tech)
-[![Contact](https://img.shields.io/badge/Contact-hello@inspiron.tech-FFD700?style=for-the-badge&logo=gmail&logoColor=white)](mailto:hello@inspiron.tech)
+[![Website](https://img.shields.io/badge/inspiron.tech-00D2FF?style=for-the-badge&logo=vercel&logoColor=white)](https://inspiron.tech)
+[![Upwork](https://img.shields.io/badge/Hire%20on%20Upwork-6FDA44?style=for-the-badge&logo=upwork&logoColor=white)](https://www.upwork.com/freelancers/cyberhasan)
+[![WhatsApp](https://img.shields.io/badge/Connect%20on%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/8801719300849)
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00D2FF,100:010409&height=100&section=footer" width="100%">
+</div>
+
+<div align="center">
+  
+**Precision · Authority · Control** *The standard for Manager.io Business Architecture.*
 
 </div>
