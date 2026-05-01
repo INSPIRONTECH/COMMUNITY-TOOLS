@@ -346,28 +346,32 @@ async function apiRequest(message) {
 }
 
 // ─── Theme Definitions ───────────────────────────────────────────────────────
-// Each entry: { id (unique slug), name, description, html (the template HTML) }
+// Each entry: { id (slug), key (stable UUID), name, description, html }
 const THEMES = [
   {
     id: 'universal-bronze',
+    key: '76100000-1111-4000-8000-000000000001',
     name: 'Universal Bronze',
     description: 'Gold accent · Clean columns · Status stamps · QR ready',
     html: UNIVERSAL_BRONZE_HTML
   },
   {
     id: 'midnight-corporate',
+    key: '76100000-2222-4000-8000-000000000002',
     name: 'Midnight Corporate',
     description: 'Deep Navy · Enterprise feel · Cyan accents · Corporate signature lines',
     html: MIDNIGHT_CORPORATE_HTML
   },
   {
     id: 'jade-clinical',
+    key: '76100000-3333-4000-8000-000000000003',
     name: 'Jade Clinical',
     description: 'Healthcare Green · Precise typography · Outfit font · Clinical layout',
     html: JADE_CLINICAL_HTML
   },
   {
     id: 'graphite-industrial',
+    key: '76100000-4444-4000-8000-000000000004',
     name: 'Graphite Industrial',
     description: 'Brutalist Mono · Industrial Gray · JetBrains Mono font · Supply chain focus',
     html: GRAPHITE_INDUSTRIAL_HTML
@@ -426,35 +430,20 @@ async function loadBusinesses() {
 async function loadInstalledThemes(businessKey) {
   installedThemeKeys = {};
   try {
-    // Fetch all themes for this business
     const data = await apiRequest({
       type: 'api-request',
       method: 'GET',
       path: '/api4/theme-batch',
-      query: { business: businessKey }
+      query: { Business: businessKey }
     });
-    const themes = Array.isArray(data) ? data : (data?.items || []);
+    const themes = Array.isArray(data) ? data : (data?.values || data?.items || []);
     themes.forEach(t => {
-      // Match by uniqueName (our slug) or name
-      const match = THEMES.find(th => th.id === t.uniqueName || th.name === t.name);
-      if (match) installedThemeKeys[match.id] = t.key || t.id;
+      // Match by uniqueName or key
+      const match = THEMES.find(th => th.id === t.uniqueName || th.key === t.key);
+      if (match) installedThemeKeys[match.id] = t.key;
     });
   } catch (err) {
-    // theme-batch may not support query params — try without
-    try {
-      const data = await apiRequest({
-        type: 'api-request',
-        method: 'GET',
-        path: '/api4/theme-batch'
-      });
-      const themes = Array.isArray(data) ? data : (data?.items || []);
-      themes
-        .filter(t => !t.business || t.business === businessKey)
-        .forEach(t => {
-          const match = THEMES.find(th => th.id === t.uniqueName || th.name === t.name);
-          if (match) installedThemeKeys[match.id] = t.key || t.id;
-        });
-    } catch (_) { /* silently continue — status will show as unknown */ }
+    console.error('Failed to load themes:', err);
   }
 }
 
@@ -570,11 +559,12 @@ async function installOne(themeId) {
   if (!theme || !selectedBusiness) return;
   setBadge(themeId, 'loading', 'Installing…');
   try {
-    const result = await apiRequest({
+    await apiRequest({
       type: 'api-request',
-      method: 'POST',
+      method: 'PUT',
       path: '/api4/theme',
       body: {
+        key: theme.key,
         business: selectedBusiness,
         value: {
           name: theme.name,
@@ -584,7 +574,7 @@ async function installOne(themeId) {
         }
       }
     });
-    installedThemeKeys[themeId] = result; // result is UUID string
+    installedThemeKeys[themeId] = theme.key;
     setBadge(themeId, 'installed', 'Installed');
     refreshRowButton(themeId, true);
     updateStatusBar();
@@ -595,7 +585,6 @@ async function installOne(themeId) {
   }
 }
 
-// ─── Uninstall One ───────────────────────────────────────────────────────────
 async function uninstallOne(themeId) {
   const theme = THEMES.find(t => t.id === themeId);
   if (!theme || !installedThemeKeys[themeId]) return;
@@ -605,7 +594,10 @@ async function uninstallOne(themeId) {
       type: 'api-request',
       method: 'DELETE',
       path: '/api4/theme',
-      body: { key: installedThemeKeys[themeId] }
+      query: {
+        Key: installedThemeKeys[themeId],
+        Business: selectedBusiness
+      }
     });
     delete installedThemeKeys[themeId];
     setBadge(themeId, 'not', 'Not installed');
