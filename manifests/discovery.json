@@ -4,7 +4,7 @@
   "contact": "hello@inspiron.tech",
   "status": "Official Manager.io Advisor & Partner",
   "suite": "INSPIRON Suite",
-  "version": "2.0.0",
+  "version": "1.1.0",
   "repository": "https://github.com/INSPIRONTECH/INSPIRON-SUITE",
   "nexus": "https://inspiron.tech",
   "endpoints": {
@@ -28,12 +28,21 @@
     }
   ],
   "utility_registry": [
-    { "id": "checklist-v1", "name": "Invoice Pre-Send Checklist", "type": "postMessage", "status": "live", "url": "https://suite.inspiron.tech/utilities/checklist-v1.html" }
+    {
+      "id": "checklist-v1",
+      "name": "Invoice Pre-Send Checklist",
+      "type": "postMessage",
+      "status": "live",
+      "version": "1.1.0",
+      "compliance": ["global", "bd-mushak-6.3"],
+      "checks": ["billing-address", "reference-no", "mushak-6.3-bin", "total-balance", "issue-date"],
+      "url": "https://suite.inspiron.tech/utilities/checklist-v1.html"
+    }
   ],
   "tax_registry": [
     { "id": "bd-nbr-2026", "name": "Bangladesh NBR Compliance Calendar", "region": "BD", "status": "live", "url": "https://tools.inspiron.tech/" }
   ],
   "ip_protocol": "R1-R7",
   "license": "CC BY 4.0",
-  "updated": "2026-04-29"
+  "updated": "2026-05-01"
 }
