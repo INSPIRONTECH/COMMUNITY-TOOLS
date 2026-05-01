@@ -15,10 +15,10 @@
     "bd_compliance": "https://tools.inspiron.tech/"
   },
   "theme_registry": [
-    { "id": "bronze-v1", "name": "BRONZE", "identity": "Universal Authority", "status": "planned", "url": "https://suite.inspiron.tech/themes/bronze-v1.html" },
-    { "id": "midnight-v1", "name": "MIDNIGHT", "identity": "Corporate Control", "status": "planned", "url": "https://suite.inspiron.tech/themes/midnight-v1.html" },
-    { "id": "jade-v1", "name": "JADE", "identity": "Clinical Precision", "status": "planned", "url": "https://suite.inspiron.tech/themes/jade-v1.html" },
-    { "id": "graphite-v1", "name": "GRAPHITE", "identity": "Industrial Logic", "status": "planned", "url": "https://suite.inspiron.tech/themes/graphite-v1.html" }
+    { "id": "universal-bronze-v1", "name": "UNIVERSAL BRONZE", "identity": "Warm Authority", "tier": "community", "status": "live", "url": "https://suite.inspiron.tech/global-suite/themes/UNIVERSAL-BRONZE-v1.html" },
+    { "id": "midnight-corporate-v1", "name": "MIDNIGHT CORPORATE", "identity": "CFO Enterprise Control", "tier": "community", "status": "live", "url": "https://suite.inspiron.tech/global-suite/themes/MIDNIGHT-CORPORATE-v1.html" },
+    { "id": "jade-clinical-v1", "name": "JADE CLINICAL", "identity": "Healthcare Precision", "tier": "community", "status": "live", "url": "https://suite.inspiron.tech/global-suite/themes/JADE-CLINICAL-v1.html" },
+    { "id": "graphite-industrial-v1", "name": "GRAPHITE INDUSTRIAL", "identity": "Industrial Logic", "tier": "community", "status": "live", "url": "https://suite.inspiron.tech/global-suite/themes/GRAPHITE-INDUSTRIAL-v1.html" }
   ],
   "utilities": [
     {

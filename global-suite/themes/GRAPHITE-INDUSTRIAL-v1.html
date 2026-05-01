@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }} - {{ reference }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+        @page { size: A4 portrait; margin: 12mm; }
+        body { font-family: 'Courier Prime', monospace; color: #000000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .canvas { width: 100%; max-width: 186mm; margin: 0 auto; display: flex; flex-direction: column; min-height: 273mm; border: 2px solid #000; padding: 15px; box-sizing: border-box; }
+        .header-block { border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; }
+        .title-text { font-size: 24pt; font-weight: 700; background: #E5E5E5; display: inline-block; padding: 5px 15px; border: 2px solid #000; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 9pt; border: 2px solid #000; }
+        .table th { background-color: #E5E5E5; color: #000; padding: 8px; text-align: left; border: 1px solid #000; text-transform: uppercase; }
+        .table td { padding: 8px; border: 1px solid #000; }
+        .totals-grid { margin-top: 15px; width: 100%; font-size: 9.5pt; border-collapse: collapse; }
+        .totals-grid td { padding: 6px; border: 1px solid #000; }
+        .totals-bold { font-weight: 700; background-color: #E5E5E5; }
+        .footer { margin-top: auto; padding-top: 10px; border-top: 2px solid #000; font-size: 8pt; display: flex; justify-content: space-between; font-weight: 700; }
+        .authority-seal a { color: #000; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+        <div class="header-block">
+            <div class="title-text">{{ title }}</div>
+            {% if business.logo != null %}<img src="{{ business.logo }}" style="max-height: 50px; border: 2px solid #000;">{% endif %}
+        </div>
+        <table style="width: 100%; border-collapse: collapse; border: 2px solid #000; margin-bottom: 15px;">
+            <tr>
+                <td style="width: 50%; border-right: 2px solid #000; padding: 10px; vertical-align: top;">
+                    <strong>CONSIGNEE:</strong><br>
+                    {{ recipient.name }}<br>{{ recipient.address | newline_to_br }}
+                </td>
+                <td style="width: 50%; padding: 10px; vertical-align: top;">
+                    <strong>SYS_DATE:</strong> {{ issue_date }}<br>
+                    <strong>SYS_REF:</strong> {{ reference }}<br>
+                    {% if due_date %}<strong>TERM_DATE:</strong> {{ due_date }}{% endif %}
+                </td>
+            </tr>
+        </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Item Code / Desc</th>
+                    <th style="text-align: center;">Qty</th>
+                    <th style="text-align: right;">Unit Rate</th>
+                    <th style="text-align: right;">Extension</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for line in lines %}
+                <tr>
+                    <td><strong>{{ line.item.name }}</strong><br>{{ line.description | newline_to_br }}</td>
+                    <td style="text-align: center;">{{ line.qty }}</td>
+                    <td style="text-align: right;">{{ line.unit_price }}</td>
+                    <td style="text-align: right;">{{ line.amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div style="display: flex; justify-content: flex-end;">
+            <table class="totals-grid" style="width: 50%;">
+                {% for total in totals %}
+                <tr class="{% if forloop.last %}totals-bold{% endif %}">
+                    <td style="text-align: right;">{{ total.label }}</td>
+                    <td style="text-align: right;">{{ total.amount }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="footer">
+            <div class="authority-seal">Industrial Logic Architected by <a href="https://inspiron.tech">MD ABU HASAN</a></div>
+            <div>[ END OF LOG ]</div>
+        </div>
+    </div>
+</body>
+</html>

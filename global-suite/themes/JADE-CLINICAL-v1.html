@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }} - {{ reference }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap');
+        @page { size: A4 portrait; margin: 12mm; }
+        body { font-family: 'Outfit', sans-serif; color: #334155; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .canvas { width: 100%; max-width: 186mm; margin: 0 auto; display: flex; flex-direction: column; min-height: 273mm; }
+        .title-text { font-size: 22pt; font-weight: 300; color: #059669; border-bottom: 1px solid #059669; padding-bottom: 10px; letter-spacing: 1px; text-transform: uppercase; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 9pt; }
+        .table th { color: #047857; padding: 8px 4px; text-align: left; border-bottom: 1.5px solid #34D399; font-weight: 500; text-transform: uppercase; font-size: 8pt; }
+        .table td { padding: 10px 4px; border-bottom: 1px dotted #A7F3D0; }
+        .totals-grid { margin-top: 15px; width: 45%; float: right; font-size: 9pt; }
+        .totals-grid td { padding: 4px; }
+        .totals-bold { font-weight: 700; color: #047857; border-top: 1px solid #059669; }
+        .footer { margin-top: auto; padding-top: 10px; border-top: 1px solid #34D399; font-size: 7.5pt; color: #94A3B8; display: flex; justify-content: space-between; }
+        .authority-seal a { color: #059669; text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+            <div class="title-text" style="flex:1;">{{ title }}</div>
+            {% if business.logo != null %}<img src="{{ business.logo }}" style="max-height: 50px; margin-left: 20px;">{% endif %}
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 9pt;">
+            <div style="background: #ECFDF5; padding: 15px; border-radius: 4px;">
+                <strong style="color: #047857;">PATIENT / CLIENT:</strong><br>
+                {{ recipient.name }}<br>{{ recipient.address | newline_to_br }}
+            </div>
+            <div style="padding: 15px;">
+                <strong>Date:</strong> {{ issue_date }}<br>
+                <strong>Record No:</strong> {{ reference }}<br>
+                {% if due_date %}<strong>Valid Until:</strong> {{ due_date }}{% endif %}
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Service / Procedure</th>
+                    <th style="text-align: center;">Qty</th>
+                    <th style="text-align: right;">Rate</th>
+                    <th style="text-align: right;">Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for line in lines %}
+                <tr>
+                    <td><strong>{{ line.item.name }}</strong><br>{{ line.description | newline_to_br }}</td>
+                    <td style="text-align: center;">{{ line.qty }}</td>
+                    <td style="text-align: right;">{{ line.unit_price }}</td>
+                    <td style="text-align: right;">{{ line.amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="totals-grid">
+            {% for total in totals %}
+            <tr class="{% if forloop.last %}totals-bold{% endif %}">
+                <td style="text-align: right;">{{ total.label }}</td>
+                <td style="text-align: right;">{{ total.amount }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div style="clear: both;"></div>
+        <div class="footer">
+            <div class="authority-seal">Healthcare Systems Architected by <a href="https://inspiron.tech">MD ABU HASAN</a></div>
+            <div>Validated Record</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }} - {{ reference }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        @page { size: A4 portrait; margin: 12mm; }
+        body { font-family: 'Roboto', sans-serif; color: #111827; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .canvas { width: 100%; max-width: 186mm; margin: 0 auto; display: flex; flex-direction: column; min-height: 273mm; }
+        .title-bar { border-bottom: 2pt solid #D97706; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .title-text { font-size: 24pt; font-weight: 700; color: #92400E; text-transform: uppercase; letter-spacing: 2px; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 9pt; }
+        .table th { background-color: #FFFBEB; color: #92400E; padding: 8px; text-align: left; border-bottom: 1.5pt solid #D97706; }
+        .table td { padding: 8px; border-bottom: 1px solid #E5E7EB; }
+        .table tr:nth-child(even) td { background-color: #FFFBEB; }
+        .totals-grid { margin-top: 20px; width: 50%; float: right; font-size: 9.5pt; }
+        .totals-grid td { padding: 4px 8px; }
+        .totals-bold { font-weight: 700; border-top: 1px solid #D97706; }
+        .footer { margin-top: auto; padding-top: 15px; border-top: 1px solid #D97706; font-size: 7.5pt; color: #6B7280; display: flex; justify-content: space-between; }
+        .authority-seal a { color: #92400E; text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+        <div class="title-bar">
+            {% if business.logo != null %}<img src="{{ business.logo }}" style="max-height: 60px;">{% endif %}
+            <div class="title-text">{{ title }}</div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 9pt; margin-bottom: 20px;">
+            <div>
+                <strong>To:</strong><br>
+                {{ recipient.name }}<br>
+                {{ recipient.address | newline_to_br }}
+            </div>
+            <div style="text-align: right;">
+                <strong>Date:</strong> {{ issue_date }}<br>
+                <strong>Reference:</strong> {{ reference }}<br>
+                {% if due_date %}<strong>Due Date:</strong> {{ due_date }}{% endif %}
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th style="text-align: center;">Qty</th>
+                    <th style="text-align: right;">Unit Price</th>
+                    <th style="text-align: right;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for line in lines %}
+                <tr>
+                    <td>{{ line.item.name }}</td>
+                    <td>{{ line.description | newline_to_br }}</td>
+                    <td style="text-align: center;">{{ line.qty }}</td>
+                    <td style="text-align: right;">{{ line.unit_price }}</td>
+                    <td style="text-align: right;">{{ line.amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="totals-grid">
+            {% for total in totals %}
+            <tr class="{% if forloop.last %}totals-bold{% endif %}">
+                <td style="text-align: right;">{{ total.label }}</td>
+                <td style="text-align: right;">{{ total.amount }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div style="clear: both;"></div>
+        <div class="footer">
+            <div class="authority-seal">Architected & Developed by <a href="https://inspiron.tech">MD ABU HASAN</a></div>
+            <div>Page 1 of 1</div>
+        </div>
+    </div>
+</body>
+</html>
